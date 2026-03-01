@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Ideas Dashboard | NarenLife.com/aiprompts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #222240;
+            --bg-header: #16213e;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888aa;
+            --text-muted: #666680;
+            --accent-1: #4CC9F0;
+            --accent-2: #F72585;
+            --accent-3: #7209B7;
+            --accent-4: #3A0CA3;
+            --accent-5: #4361EE;
+            --accent-6: #06D6A0;
+            --accent-7: #FFD166;
+            --positive: #06D6A0;
+            --negative: #EF476F;
+            --border: #2a2a4a;
+            --gap: 16px;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        .dashboard-container { max-width: 1600px; margin: 0 auto; padding: var(--gap); }
+
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 50%, #0f3460 100%);
+            padding: 28px 32px;
+            border-radius: var(--radius);
+            margin-bottom: var(--gap);
+            border: 1px solid var(--border);
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+        .header-top h1 { font-size: 26px; font-weight: 700; background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-top .subtitle { color: var(--text-secondary); font-size: 14px; }
+        .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .filter-group { display: flex; align-items: center; gap: 6px; }
+        .filter-group label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .filter-group select, .search-input {
+            padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px;
+            background: rgba(255,255,255,0.05); color: var(--text-primary); font-size: 13px; outline: none;
+        }
+        .filter-group select:focus, .search-input:focus { border-color: var(--accent-1); }
+        .filter-group select option { background: var(--bg-card); color: var(--text-primary); }
+        .search-input { width: 240px; }
+
+        /* KPI Row */
+        .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
+        .kpi-card {
+            background: var(--bg-card); border-radius: var(--radius); padding: 20px;
+            border: 1px solid var(--border); transition: all 0.2s;
+        }
+        .kpi-card:hover { border-color: var(--accent-1); transform: translateY(-2px); }
+        .kpi-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .kpi-value { font-size: 32px; font-weight: 700; color: var(--text-primary); }
+        .kpi-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+        /* Charts Row */
+        .chart-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
+        .chart-container {
+            background: var(--bg-card); border-radius: var(--radius); padding: 20px 24px;
+            border: 1px solid var(--border);
+        }
+        .chart-container h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; }
+        .chart-container canvas { max-height: 300px; }
+
+        /* Avatar Tabs */
+        .avatar-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--gap); }
+        .avatar-tab {
+            padding: 10px 20px; border-radius: 30px; border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text-secondary); font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        }
+        .avatar-tab:hover { border-color: var(--accent-1); color: var(--text-primary); }
+        .avatar-tab.active { background: var(--accent-1); color: #000; border-color: var(--accent-1); font-weight: 600; }
+
+        /* Prompt Cards */
+        .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
+        .prompt-card {
+            background: var(--bg-card); border-radius: var(--radius); padding: 24px;
+            border: 1px solid var(--border); transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .prompt-card:hover { border-color: var(--accent-5); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(67,97,238,0.15); }
+        .prompt-card .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .prompt-card .prompt-title { font-size: 16px; font-weight: 600; color: var(--text-primary); flex: 1; }
+        .prompt-card .effectiveness {
+            display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px;
+            font-size: 13px; font-weight: 700; white-space: nowrap;
+        }
+        .eff-high { background: rgba(6,214,160,0.15); color: var(--positive); }
+        .eff-med { background: rgba(255,209,102,0.15); color: var(--accent-7); }
+        .eff-low { background: rgba(239,71,111,0.15); color: var(--negative); }
+        .prompt-card .expert { font-size: 12px; color: var(--accent-1); margin-bottom: 8px; }
+        .prompt-card .description { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+        .prompt-card .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .prompt-card .tag {
+            padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500;
+            background: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid var(--border);
+        }
+        .prompt-card .use-case { font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 12px; }
+        .prompt-card .use-case strong { color: var(--text-secondary); }
+        .prompt-card .avatar-badge {
+            position: absolute; top: 0; right: 0; padding: 6px 14px; border-radius: 0 12px 0 12px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* Expert Directory */
+        .expert-section { margin-bottom: var(--gap); }
+        .expert-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
+        .expert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
+        .expert-card {
+            background: var(--bg-card); border-radius: var(--radius); padding: 20px;
+            border: 1px solid var(--border); transition: all 0.2s;
+        }
+        .expert-card:hover { border-color: var(--accent-3); }
+        .expert-card .handle { font-size: 15px; font-weight: 600; color: var(--accent-1); margin-bottom: 4px; }
+        .expert-card .specialty { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+        .expert-card .avatar-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+        .expert-card .avatar-tag-small {
+            padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        /* Learning Section */
+        .learning-section {
+            background: var(--bg-card); border-radius: var(--radius); padding: 28px;
+            border: 1px solid var(--border); margin-bottom: var(--gap);
+        }
+        .learning-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .framework-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: var(--gap); }
+        .framework-card {
+            background: rgba(255,255,255,0.03); border-radius: 8px; padding: 20px;
+            border: 1px solid var(--border);
+        }
+        .framework-card h4 { font-size: 15px; font-weight: 600; color: var(--accent-1); margin-bottom: 8px; }
+        .framework-card p { font-size: 13px; color: var(--text-secondary); }
+        .framework-card pre {
+            background: rgba(0,0,0,0.3); border-radius: 6px; padding: 14px; margin-top: 10px;
+            font-size: 12px; color: var(--accent-6); overflow-x: auto; line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--bg-card); border-radius: var(--radius); padding: 32px;
+            max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+        .modal h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .modal .close-btn {
+            float: right; background: none; border: none; color: var(--text-secondary);
+            font-size: 24px; cursor: pointer;
+        }
+        .modal .close-btn:hover { color: var(--text-primary); }
+        .modal .prompt-text {
+            background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; margin: 16px 0;
+            font-family: 'Courier New', monospace; font-size: 13px; color: var(--accent-6);
+            line-height: 1.6; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .modal .copy-btn {
+            padding: 8px 20px; border-radius: 8px; border: none;
+            background: var(--accent-1); color: #000; font-weight: 600; font-size: 13px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .modal .copy-btn:hover { opacity: 0.8; }
+        .modal .meta-info { margin-top: 16px; font-size: 13px; color: var(--text-secondary); }
+        .modal .meta-info span { display: block; margin-bottom: 6px; }
+
+        /* Tabs Content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        /* Color coding for avatars */
+        .av-innovator { background: rgba(76,201,240,0.15); color: var(--accent-1); border-color: var(--accent-1); }
+        .av-ceo { background: rgba(247,37,133,0.15); color: var(--accent-2); border-color: var(--accent-2); }
+        .av-marketer { background: rgba(114,9,183,0.15); color: var(--accent-3); border-color: var(--accent-3); }
+        .av-podcaster { background: rgba(67,97,238,0.15); color: var(--accent-5); border-color: var(--accent-5); }
+        .av-influencer { background: rgba(255,209,102,0.15); color: var(--accent-7); border-color: var(--accent-7); }
+        .av-wellness { background: rgba(6,214,160,0.15); color: var(--accent-6); border-color: var(--accent-6); }
+        .av-investor { background: rgba(58,12,163,0.15); color: #9b7ff0; border-color: #9b7ff0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chart-row { grid-template-columns: 1fr; }
+            .prompts-grid { grid-template-columns: 1fr; }
+            .header-top { flex-direction: column; }
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* Footer */
+        .dashboard-footer {
+            text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px;
+            border-top: 1px solid var(--border); margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+        <div class="header-top">
+            <div>
+                <h1>AI Prompt Ideas Dashboard</h1>
+                <div class="subtitle">NarenLife.com/aiprompts &mdash; Curated from 30+ X/Twitter Prompt Experts</div>
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Avatar</label>
+                    <select id="filter-avatar" onchange="dashboard.applyFilters()">
+                        <option value="all">All Avatars</option>
+                        <option value="innovator">Innovator</option>
+                        <option value="ceo">CEO</option>
+                        <option value="marketer">Marketer</option>
+                        <option value="podcaster">Podcaster</option>
+                        <option value="influencer">Influencer</option>
+                        <option value="wellness">Wellness</option>
+                        <option value="investor">Investor</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Rating</label>
+                    <select id="filter-rating" onchange="dashboard.applyFilters()">
+                        <option value="all">All Ratings</option>
+                        <option value="9">9-10 (Elite)</option>
+                        <option value="8">8+ (Excellent)</option>
+                        <option value="7">7+ (Good)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input type="text" class="search-input" id="search-input" placeholder="Search prompts..." oninput="dashboard.applyFilters()">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- KPIs -->
+    <section class="kpi-row">
+        <div class="kpi-card">
+            <div class="kpi-label">Total Prompts</div>
+            <div class="kpi-value" id="kpi-total">0</div>
+            <div class="kpi-sub">across all avatars</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Experts Tracked</div>
+            <div class="kpi-value" id="kpi-experts">0</div>
+            <div class="kpi-sub">X/Twitter profiles</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Avg Effectiveness</div>
+            <div class="kpi-value" id="kpi-avg">0</div>
+            <div class="kpi-sub">out of 10</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Elite Prompts (9+)</div>
+            <div class="kpi-value" id="kpi-elite">0</div>
+            <div class="kpi-sub">highest rated</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Avatar Types</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-sub">categories</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Frameworks</div>
+            <div class="kpi-value" id="kpi-frameworks">12</div>
+            <div class="kpi-sub">proven patterns</div>
+        </div>
+    </section>
+
+    <!-- CHARTS -->
+    <section class="chart-row">
+        <div class="chart-container">
+            <h3>Prompts by Avatar Category</h3>
+            <canvas id="chart-avatar-dist"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Effectiveness Distribution</h3>
+            <canvas id="chart-effectiveness"></canvas>
+        </div>
+    </section>
+    <section class="chart-row">
+        <div class="chart-container">
+            <h3>Top Experts by Prompt Count</h3>
+            <canvas id="chart-experts"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Average Rating by Avatar</h3>
+            <canvas id="chart-avg-rating"></canvas>
+        </div>
+    </section>
+
+    <!-- AVATAR TABS -->
+    <div class="avatar-tabs" id="avatar-tabs">
+        <div class="avatar-tab active" data-tab="all" onclick="dashboard.setTab('all')">All Prompts</div>
+        <div class="avatar-tab" data-tab="innovator" onclick="dashboard.setTab('innovator')">Innovator</div>
+        <div class="avatar-tab" data-tab="ceo" onclick="dashboard.setTab('ceo')">CEO</div>
+        <div class="avatar-tab" data-tab="marketer" onclick="dashboard.setTab('marketer')">Marketer</div>
+        <div class="avatar-tab" data-tab="podcaster" onclick="dashboard.setTab('podcaster')">Podcaster</div>
+        <div class="avatar-tab" data-tab="influencer" onclick="dashboard.setTab('influencer')">Influencer</div>
+        <div class="avatar-tab" data-tab="wellness" onclick="dashboard.setTab('wellness')">Wellness</div>
+        <div class="avatar-tab" data-tab="investor" onclick="dashboard.setTab('investor')">Investor</div>
+        <div class="avatar-tab" data-tab="experts" onclick="dashboard.setTab('experts')">Expert Directory</div>
+        <div class="avatar-tab" data-tab="learn" onclick="dashboard.setTab('learn')">Learn Frameworks</div>
+    </div>
+
+    <!-- PROMPT CARDS -->
+    <div id="prompts-container" class="prompts-grid"></div>
+
+    <!-- EXPERT DIRECTORY (hidden by default) -->
+    <div id="experts-container" style="display:none"></div>
+
+    <!-- LEARNING SECTION (hidden by default) -->
+    <div id="learn-container" style="display:none"></div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal-content"></div>
+    </div>
+
+    <footer class="dashboard-footer">
+        AI Prompt Ideas Dashboard &mdash; Curated for NarenLife.com/aiprompts &mdash; Last Updated: March 2026<br>
+        Sources: @godofprompt, @ChrisLaubAI, @alex_prompter, @MillieMarconnni, @socialwithaayan, @patrick_oshag, @noelcetaSEO + 25 more experts
+    </footer>
+</div>
+
+<script>
+// ===================== DATA =====================
+const PROMPTS = [
+    // ===== INNOVATOR PROMPTS =====
+    {id:1, title:"SaaS Business Idea Validator", avatar:"innovator", expert:"@godofprompt", effectiveness:8,
+     description:"Validates startup ideas through market intelligence analysis. Adopts role of 'market intelligence operative' working with bootstrapped developers to evaluate product-market fit potential.",
+     tags:["startup","validation","PMF","market-research"],
+     useCase:"Use when you have a new SaaS idea and need quick validation before building. Paste your idea and get market size, competition analysis, and PMF signals.",
+     promptText:`<role>You are a market intelligence operative specializing in SaaS validation for bootstrapped developers.</role>\n\n<context>I need you to evaluate the following startup idea with brutal honesty. Consider market size, existing competition, differentiation potential, and realistic revenue projections.</context>\n\n<task>\nAnalyze this idea: [YOUR IDEA HERE]\n\n1. Market Size Assessment (TAM/SAM/SOM)\n2. Competitive Landscape (top 5 competitors + gaps)\n3. Differentiation Score (1-10)\n4. Revenue Model Viability\n5. PMF Signals to Watch\n6. Go/No-Go Recommendation with reasoning\n</task>\n\n<output_format>Use structured sections with clear headers. Be direct - no fluff.</output_format>`,
+     source:"godofprompt.ai"},
+
+    {id:2, title:"All-in-One Technical Cofounder", avatar:"innovator", expert:"@ChrisLaubAI", effectiveness:9,
+     description:"Positions Claude as technical cofounder, product strategist, designer, copywriter, and launch expert simultaneously. Guides through audience validation, MVP features, backend implementation, landing page copy, and GTM strategy with human review gates.",
+     tags:["mega-prompt","full-stack","MVP","launch"],
+     useCase:"Use when building a product from scratch. This single prompt orchestrates the entire build cycle from idea to launch, pausing for your approval at each phase.",
+     promptText:`You are my technical cofounder, product strategist, UI/UX designer, copywriter, and go-to-market strategist.\n\nWe are building: [YOUR PRODUCT IDEA]\n\nWork through these phases sequentially. After each phase, STOP and wait for my approval before proceeding:\n\nPHASE 1 - AUDIENCE VALIDATION\n- Define ideal customer profile (ICP)\n- List top 5 pain points they experience\n- Identify where they currently spend money on solutions\n- Propose unique value proposition\n\nPHASE 2 - CORE FEATURES & MVP\n- Define the minimum feature set for launch\n- Prioritize using RICE framework\n- Create user story map\n- Define success metrics\n\nPHASE 3 - TECHNICAL ARCHITECTURE\n- Recommend tech stack with reasoning\n- Design database schema\n- Define API endpoints\n- Security considerations\n\nPHASE 4 - LANDING PAGE & COPY\n- Write hero headline (3 variants)\n- Feature/benefit copy\n- Social proof strategy\n- CTA optimization\n\nPHASE 5 - GO-TO-MARKET\n- Launch channels ranked by ROI\n- First 30-day marketing plan\n- Pricing strategy with tiers\n- Growth loops to build in\n\nStart with Phase 1 now.`,
+     source:"x.com/ChrisLaubAI"},
+
+    {id:3, title:"Multi-Persona Business Validator", avatar:"innovator", expert:"@mattshumer_", effectiveness:9,
+     description:"Forces Claude to emulate multiple user personas with different demographics, pain points, and needs. Provides blunt, balanced validation with potential markets, risks, alternatives, and final recommendation.",
+     tags:["validation","personas","startup","multi-perspective"],
+     useCase:"Use before committing to any business idea. Gets you feedback from 3 different user perspectives plus market risk analysis.",
+     promptText:`Analyze this business idea by adopting 3 distinct user personas:\n\n<idea>[YOUR BUSINESS IDEA]</idea>\n\n<instructions>\nFor each persona:\n1. Create a realistic profile (age, job, income, tech-savviness, pain points)\n2. Rate their likelihood to pay (1-10) with reasoning\n3. Identify their top objection\n4. Suggest what would make them say "shut up and take my money"\n\nThen provide:\n- Overall market risk assessment\n- 3 alternative business models for the same problem\n- Final GO/PIVOT/KILL recommendation\n- If PIVOT: exactly what to change\n\nBe brutally honest. I need truth, not encouragement.\n</instructions>`,
+     source:"x.com/mattshumer_"},
+
+    {id:4, title:"Chain-of-Thought Innovation Sprint", avatar:"innovator", expert:"Community Best Practice", effectiveness:9,
+     description:"Uses XML thinking tags to force Claude through step-by-step reasoning on complex innovation problems. Proven to improve response quality by up to 39%.",
+     tags:["CoT","reasoning","framework","advanced"],
+     useCase:"Use for any complex strategic decision. The thinking tags force Claude to show its work and catch logical errors before presenting conclusions.",
+     promptText:`<role>You are a senior innovation strategist at a top-tier consulting firm.</role>\n\n<problem>[DESCRIBE YOUR INNOVATION CHALLENGE]</problem>\n\n<instructions>\nThink through this problem step-by-step using first principles:\n\n1. DECOMPOSE: Break the problem into its fundamental components\n2. ANALYZE: Examine each component independently\n3. SYNTHESIZE: Identify non-obvious connections between components\n4. GENERATE: Create 5 potential solutions (including at least 2 unconventional ones)\n5. EVALUATE: Score each solution on feasibility (1-10), impact (1-10), and speed (1-10)\n6. RECOMMEND: Pick top 2 with implementation roadmap\n\nShow your thinking at each step. Challenge your own assumptions.\n</instructions>`,
+     source:"Anthropic Best Practices"},
+
+    {id:5, title:"n8n Automation Agent Builder", avatar:"innovator", expert:"@alex_prompter", effectiveness:8,
+     description:"Turns Claude into an n8n expert that designs, codes, and deploys AI agents from scratch. Used to build 47 different automation agents in 3 months.",
+     tags:["automation","n8n","agents","no-code"],
+     useCase:"Use when you want to automate any business process with n8n. Describe what you want automated and get a complete workflow design.",
+     promptText:`You are an expert n8n workflow automation developer with deep knowledge of:\n- All n8n nodes and their configurations\n- API integrations (REST, GraphQL, webhooks)\n- Data transformation and mapping\n- Error handling and retry logic\n- AI agent design patterns\n\nI need you to design a complete n8n workflow for: [DESCRIBE YOUR AUTOMATION]\n\n<requirements>\n1. Draw the workflow architecture (describe each node and connection)\n2. Specify exact node configurations\n3. Include error handling for each critical step\n4. Add data validation between nodes\n5. Suggest monitoring and alerting\n6. Estimate build time and complexity\n</requirements>\n\nProvide the workflow as a step-by-step implementation guide I can follow.`,
+     source:"x.com/alex_prompter"},
+
+    {id:6, title:"Shark Tank Investor Lens Framework", avatar:"innovator", expert:"Robo Rhythms", effectiveness:8,
+     description:"9-prompt sequence covering every startup stage from ideation to 30-day post-launch. Each prompt assigns Claude a specific expert role with constraints and demands numbered output.",
+     tags:["startup","investor","pitch","launch-sequence"],
+     useCase:"Use as a complete startup launch playbook. Run through all 9 prompts sequentially to go from idea to launch-ready.",
+     promptText:`PROMPT 1 of 9 - IDEA GENERATION\n\nYou are a venture capital partner who has funded 50+ successful startups. Your job is to generate 5 startup ideas that would get funded in 2026.\n\nConstraints:\n- Each idea must solve a real, painful problem\n- TAM must be >$1B\n- Must be buildable by a solo founder in <90 days\n- Must have clear path to $10K MRR\n\nFor each idea provide:\n1. One-line pitch\n2. Target customer\n3. Revenue model\n4. Unfair advantage needed\n5. Why NOW is the right time\n\n[Continue with Prompts 2-9: Validation, MVP, Pitch Deck, Cold Outreach, Pricing, Landing Page, Launch Plan, 30-Day Review]`,
+     source:"roborhythms.com"},
+
+    {id:7, title:"Product-Market Fit Validation Framework", avatar:"innovator", expert:"Community/AI News", effectiveness:9,
+     description:"Multi-dimensional PMF assessment covering behavioral signals, economic signals, retention, NPS proxies, value delivery, willingness-to-pay, and word-of-mouth - hard-to-fake metrics.",
+     tags:["PMF","validation","metrics","behavioral"],
+     useCase:"Use after you have early users/beta testers. This prompt analyzes real signals (not vanity metrics) to determine if you've hit PMF.",
+     promptText:`<role>You are a product-market fit analyst who only trusts behavioral and economic signals, never vanity metrics.</role>\n\n<context>Analyze the following data about my product to determine PMF status:\n\nProduct: [NAME]\nMonths live: [X]\nTotal users: [X]\nMonthly actives: [X]\nPaying users: [X]\nChurn rate: [X%]\nNPS score: [X]\nOrganic signups: [X%]\n</context>\n\n<task>\nEvaluate across these 5 dimensions:\n\n1. RETENTION SIGNALS - Are users coming back without being prompted?\n2. ECONOMIC SIGNALS - Are users paying willingly? Is CAC < LTV?\n3. BEHAVIORAL SIGNALS - Are users doing things you didn't expect?\n4. NETWORK SIGNALS - Are users referring others organically?\n5. EMOTIONAL SIGNALS - Would users be disappointed if the product disappeared?\n\nFor each dimension:\n- Score 1-10\n- Cite the specific data point\n- Flag if data is missing\n\nFinal verdict: PRE-PMF / APPROACHING PMF / PMF ACHIEVED\nWith specific actions to improve weakest dimension.\n</task>`,
+     source:"AI News / Community"},
+
+    // ===== CEO PROMPTS =====
+    {id:8, title:"Executive Decision Framework", avatar:"ceo", expert:"@godofprompt", effectiveness:8,
+     description:"Structured decision-making prompt modeled after top PM methodologies. Helps CEOs make better decisions by forcing analysis of options, risks, stakeholders, and second-order effects.",
+     tags:["leadership","decision-making","strategy","executive"],
+     useCase:"Use when facing any major business decision. Forces you to consider angles you might miss under pressure.",
+     promptText:`<role>You are a chief of staff to a Fortune 500 CEO, known for rigorous analytical decision-making.</role>\n\n<decision>[DESCRIBE THE DECISION YOU NEED TO MAKE]</decision>\n\n<analysis_framework>\n1. FRAMING: Restate the decision as a clear question with measurable outcomes\n2. OPTIONS: List 4+ options including "do nothing" and one contrarian option\n3. CRITERIA: Define 5 evaluation criteria weighted by importance\n4. STAKEHOLDER MAP: Who is affected? Who has veto power? Who needs to be informed?\n5. RISK MATRIX: For each option, map probability vs. impact of failure\n6. SECOND-ORDER EFFECTS: What happens 6-12 months after each decision?\n7. REVERSIBILITY: Rate each option's reversibility (1-10)\n8. RECOMMENDATION: Top choice with implementation timeline\n9. PRE-MORTEM: "It's 1 year later and this failed. What went wrong?"\n</analysis_framework>`,
+     source:"godofprompt.ai"},
+
+    {id:9, title:"700+ Mega Prompt Productivity Engine", avatar:"ceo", expert:"@heyrimsha", effectiveness:8,
+     description:"Comprehensive productivity system using Claude as a full management team. Covers operations, finance, HR, marketing, and strategy in structured prompt templates.",
+     tags:["productivity","operations","management","comprehensive"],
+     useCase:"Use as a daily operating system. Pick the relevant module for whatever you're working on - from board meeting prep to hiring decisions.",
+     promptText:`You are my executive productivity engine. Based on what I need right now, activate the relevant module:\n\nMODULES AVAILABLE:\n- STRATEGY: Quarterly planning, OKR setting, competitive analysis\n- OPERATIONS: Process optimization, bottleneck analysis, SOP creation\n- FINANCE: Budget review, cash flow forecasting, pricing decisions\n- PEOPLE: Hiring frameworks, performance reviews, team structure\n- MARKETING: Campaign strategy, content calendar, brand positioning\n- SALES: Pipeline review, deal strategy, pricing negotiation\n- PRODUCT: Feature prioritization, roadmap planning, user research synthesis\n\nMy current need: [DESCRIBE WHAT YOU NEED]\n\nActivate the relevant module and provide:\n1. Structured analysis\n2. Action items with owners and deadlines\n3. Key metrics to track\n4. Risks and mitigations`,
+     source:"x.com/heyrimsha"},
+
+    {id:10, title:"Iterative Context Builder", avatar:"ceo", expert:"@AzibaHQ", effectiveness:7,
+     description:"Progressive prompt refinement technique for complex business problems. Each iteration adds more context and constraints, producing increasingly precise outputs.",
+     tags:["iterative","context","refinement","technique"],
+     useCase:"Use when your first prompt doesn't give you what you need. This framework shows you how to progressively refine outputs.",
+     promptText:`ITERATION FRAMEWORK FOR COMPLEX BUSINESS PROBLEMS:\n\nROUND 1 - BROAD EXPLORATION:\n"I'm the CEO of [company type]. Give me a high-level analysis of [topic]. Focus on the 3 most important aspects."\n\nROUND 2 - ADD CONSTRAINTS:\n"Good. Now refine this with these constraints: [budget: X], [timeline: X], [team size: X], [market: X]. Which of your 3 aspects changes most?"\n\nROUND 3 - STRESS TEST:\n"Now assume the worst case: [competitor launches similar], [key employee leaves], [funding doesn't close]. How does your recommendation change?"\n\nROUND 4 - ACTIONABLE OUTPUT:\n"Convert your analysis into a 1-page executive brief with: decision needed, options ranked, recommended action, key risks, and next 3 steps with deadlines."\n\nEach round builds on the last. Never start over.`,
+     source:"x.com/AzibaHQ"},
+
+    {id:11, title:"Strategic Planning Sprint", avatar:"ceo", expert:"@AIFrontliner", effectiveness:8,
+     description:"From-scratch business building prompts that push Claude's limits for strategic planning. Covers business model canvas, competitive moats, and scaling roadmap.",
+     tags:["strategy","planning","business-model","scaling"],
+     useCase:"Use for annual planning or when pivoting your business. Gets you a comprehensive strategic plan in one session.",
+     promptText:`<role>You are a McKinsey senior partner specializing in growth strategy for companies doing $1M-$50M ARR.</role>\n\n<company_context>\nCompany: [NAME]\nRevenue: [X]\nGrowth rate: [X%]\nTeam size: [X]\nKey product: [X]\nBiggest challenge: [X]\n</company_context>\n\n<deliverables>\n1. STRATEGIC ASSESSMENT\n   - Current position (strengths, weaknesses, moats)\n   - Market dynamics and tailwinds/headwinds\n   - Competitive position map\n\n2. GROWTH STRATEGY (3 horizons)\n   - H1 (0-6mo): Quick wins and optimizations\n   - H2 (6-18mo): New channels/products\n   - H3 (18-36mo): Market expansion/transformation\n\n3. EXECUTION ROADMAP\n   - Q1 priorities (max 3)\n   - Key hires needed\n   - Budget allocation recommendation\n   - OKRs for next quarter\n\n4. RISK REGISTER\n   - Top 5 risks ranked by impact x probability\n   - Mitigation for each\n</deliverables>`,
+     source:"x.com/AIFrontliner"},
+
+    {id:12, title:"Board Meeting Prep System", avatar:"ceo", expert:"@godofprompt", effectiveness:8,
+     description:"Comprehensive board meeting preparation including narrative memo, financial highlights, strategic updates, and anticipated questions with prepared answers.",
+     tags:["board","governance","presentation","preparation"],
+     useCase:"Use 1-2 weeks before board meetings. Feed in your metrics and get a complete board package.",
+     promptText:`<role>You are a chief of staff preparing the CEO for a board meeting.</role>\n\n<company_data>\nQuarterly revenue: [X]\nBurn rate: [X]\nRunway: [X months]\nKey wins: [list]\nKey challenges: [list]\nHeadcount changes: [X]\nProduct milestones: [list]\n</company_data>\n\n<deliverables>\n1. EXECUTIVE MEMO (1 page)\n   - State of the business in 3 sentences\n   - Top 3 wins with metrics\n   - Top 3 challenges with mitigation plans\n   - Key ask from the board\n\n2. FINANCIAL HIGHLIGHTS\n   - Revenue vs plan (variance explanation)\n   - Cash position and runway\n   - Key unit economics\n\n3. STRATEGIC UPDATE\n   - Progress against OKRs (red/yellow/green)\n   - Market landscape changes\n   - Competitive moves to note\n\n4. ANTICIPATED QUESTIONS\n   - List 10 toughest questions a board member might ask\n   - Prepare concise, data-backed answers for each\n\n5. APPENDIX\n   - Detailed metrics dashboard description\n   - Team org chart changes\n</deliverables>`,
+     source:"godofprompt.ai"},
+
+    // ===== MARKETER PROMPTS =====
+    {id:13, title:"Full Marketing Automation Mega-Prompt", avatar:"marketer", expert:"@alex_prompter", effectiveness:9,
+     description:"Handles market research, content creation, ad copy, SEO optimization, and campaign planning in one prompt. Replaced $4K-$10K/month in freelancer costs.",
+     tags:["mega-prompt","automation","full-funnel","ROI"],
+     useCase:"Use as your daily marketing co-pilot. Feed in your product and get complete campaign assets.",
+     promptText:`<role>You are a full-stack marketing director who has scaled 3 companies from $0 to $10M ARR. You think in funnels, not tactics.</role>\n\n<product>\nName: [X]\nTarget audience: [X]\nPrice point: [X]\nKey differentiator: [X]\nCurrent channels: [X]\n</product>\n\n<deliverables>\n1. MARKET RESEARCH\n   - Top 5 competitors and their positioning gaps\n   - 3 underserved audience segments\n   - Trending topics/keywords in the space\n\n2. CONTENT STRATEGY\n   - 4-week content calendar (topics, formats, channels)\n   - 5 blog post titles optimized for SEO\n   - 10 social media hooks\n\n3. AD COPY\n   - 3 Facebook ad variants (headline + body + CTA)\n   - 3 Google Search ad variants\n   - Landing page headline and subhead (3 options)\n\n4. EMAIL SEQUENCE\n   - 5-email welcome/nurture sequence\n   - Subject lines A/B test variants\n\n5. SEO QUICK WINS\n   - 10 long-tail keywords to target\n   - On-page optimization checklist\n   - Content gaps vs competitors\n\n6. METRICS FRAMEWORK\n   - KPIs for each channel\n   - Weekly reporting template\n</deliverables>`,
+     source:"x.com/alex_prompter"},
+
+    {id:14, title:"SEO Content That Ranks Framework", avatar:"marketer", expert:"@noelcetaSEO", effectiveness:9,
+     description:"Generates SEO articles that rank on page 1-2 by focusing on search intent, natural language, and E-E-A-T principles. Beats AI detectors while maintaining quality.",
+     tags:["SEO","content","ranking","E-E-A-T"],
+     useCase:"Use when writing any content intended to rank in Google. Input your target keyword and get a complete article framework.",
+     promptText:`<role>You are an SEO content strategist who has ranked 500+ articles on page 1 of Google. You understand that Google rewards helpful, accurate content that satisfies search intent.</role>\n\n<keyword>[YOUR TARGET KEYWORD]</keyword>\n\n<instructions>\n1. SEARCH INTENT ANALYSIS\n   - What is the searcher really trying to accomplish?\n   - Informational / Navigational / Commercial / Transactional?\n   - What questions do they have at each stage?\n\n2. CONTENT STRUCTURE\n   - H1 (include keyword naturally)\n   - H2s that cover all subtopics (use "People Also Ask" logic)\n   - Recommended word count based on competing pages\n   - Internal linking opportunities\n\n3. E-E-A-T SIGNALS\n   - Add experience markers ("In my experience...")\n   - Include specific data points and citations\n   - Expert perspective angles\n   - Trust signals (methodology, sources)\n\n4. WRITE THE ARTICLE\n   - Natural, conversational tone\n   - Short paragraphs (2-3 sentences max)\n   - Use transition words naturally\n   - Include FAQ section with schema-ready Q&As\n\nCRITICAL: Write like a human expert, not an AI. Vary sentence length. Include opinions. Add anecdotes.\n</instructions>`,
+     source:"linkedin.com/noelceta"},
+
+    {id:15, title:"Affiliate Marketing Angle Finder", avatar:"marketer", expert:"@dasilvashadow", effectiveness:7,
+     description:"Refines headlines, ad copy, and marketing angles based on performance data. Great for optimizing complex sales funnels and affiliate campaigns.",
+     tags:["affiliate","copy","optimization","funnels"],
+     useCase:"Use when testing ad copy or sales pages. Input your current copy and performance data, get optimized variants.",
+     promptText:`<role>You are a direct response copywriter who has generated $50M+ in affiliate sales. You think in angles, hooks, and emotional triggers.</role>\n\n<current_campaign>\nProduct: [X]\nCurrent headline: [X]\nCurrent CTR: [X%]\nCurrent conversion rate: [X%]\nTarget audience: [X]\nPain points: [list]\n</current_campaign>\n\n<task>\n1. ANGLE AUDIT\n   - Why is the current angle working/not working?\n   - 5 alternative angles ranked by emotional intensity\n\n2. HEADLINE VARIANTS\n   - 10 headlines using different psychological triggers\n   - (curiosity, fear, greed, urgency, social proof, authority)\n\n3. AD COPY OPTIMIZATION\n   - 3 short-form ad variants (FB/IG)\n   - 3 long-form ad variants (YouTube/Native)\n   - Each with different hooks and CTAs\n\n4. LANDING PAGE COPY\n   - Above-the-fold copy (headline + subhead + CTA)\n   - 5 bullet points using "fascination" formula\n   - Objection handling section\n   - Urgency/scarcity element\n</task>`,
+     source:"x.com/dasilvashadow"},
+
+    {id:16, title:"McKinsey-Style Market Research", avatar:"marketer", expert:"@thisdudelikesAI", effectiveness:8,
+     description:"12 reverse-engineered consultant prompts for deep market research. Covers industry analysis, customer segmentation, competitive positioning, and market sizing.",
+     tags:["research","consulting","McKinsey","analysis"],
+     useCase:"Use for any major market research project. These prompts replicate the frameworks used by top consulting firms.",
+     promptText:`<role>You are a McKinsey engagement manager leading a market research project.</role>\n\n<project>\nIndustry: [X]\nClient goal: [X]\nGeography: [X]\nTimeline: [X]\n</project>\n\n<framework>\nApply the following consulting frameworks:\n\n1. MARKET SIZING (Top-down + Bottom-up)\n   - TAM, SAM, SOM with methodology\n   - Growth rate projections (3-year)\n   - Key assumptions clearly stated\n\n2. PORTER'S FIVE FORCES\n   - Score each force 1-5\n   - Net industry attractiveness\n\n3. CUSTOMER SEGMENTATION\n   - 4-5 distinct segments\n   - Size, growth, profitability of each\n   - Unmet needs per segment\n\n4. COMPETITIVE LANDSCAPE\n   - Strategic group mapping\n   - Capability comparison matrix\n   - White space opportunities\n\n5. SO-WHAT\n   - 3 key implications\n   - Recommended strategic moves\n   - Quick wins vs. long-term bets\n\nPresent as you would to a C-suite audience: data-driven, concise, with clear "so what" after each section.\n</framework>`,
+     source:"x.com/thisdudelikesAI"},
+
+    {id:17, title:"Sales-Focused Campaign Optimizer", avatar:"marketer", expert:"@sparksalespro", effectiveness:8,
+     description:"21 tested sales mega-prompts for clearer instructions in campaigns. Focuses on real conversion outcomes, not vanity metrics.",
+     tags:["sales","conversion","campaigns","tested"],
+     useCase:"Use when your marketing generates traffic but not sales. This shifts focus to revenue-generating activities.",
+     promptText:`<role>You are a revenue-focused CMO who only cares about pipeline and closed deals. Vanity metrics make you angry.</role>\n\n<situation>\nProduct: [X]\nAvg deal size: [X]\nSales cycle: [X days]\nCurrent pipeline: [X]\nMonthly target: [X]\nBiggest bottleneck: [X]\n</situation>\n\n<task>\n1. PIPELINE DIAGNOSIS\n   - Where are deals dying?\n   - What's the conversion rate at each stage?\n   - What content/touch is missing?\n\n2. CAMPAIGN DESIGN (revenue-first)\n   - Campaign goal tied to pipeline $\n   - Target account list criteria\n   - Multi-touch sequence (email + social + content)\n   - Sales enablement assets needed\n\n3. MESSAGING FRAMEWORK\n   - Pain-agitate-solve for each buyer persona\n   - Objection handling scripts\n   - Case study angles\n\n4. METRICS THAT MATTER\n   - Leading indicators to track weekly\n   - Lagging indicators for monthly review\n   - Red flags that need immediate action\n</task>`,
+     source:"x.com/sparksalespro"},
+
+    // ===== PODCASTER PROMPTS =====
+    {id:18, title:"Podcast Episode Script Generator", avatar:"podcaster", expert:"Community/Best Practice", effectiveness:8,
+     description:"Creates natural-sounding podcast scripts with conversational flow, strategic pauses, and engagement hooks. Includes intro, segments, transitions, and outro.",
+     tags:["script","episode","structure","production"],
+     useCase:"Use before recording any episode. Input your topic and guest info, get a complete script framework.",
+     promptText:`<role>You are a podcast producer who has worked on top-100 shows. You understand pacing, storytelling, and listener retention.</role>\n\n<episode_details>\nPodcast name: [X]\nEpisode topic: [X]\nTarget length: [X minutes]\nGuest (if any): [X]\nAudience level: [beginner/intermediate/expert]\n</episode_details>\n\n<script_structure>\n1. COLD OPEN (30 sec)\n   - Provocative statement or question\n   - Preview of the key insight\n\n2. INTRO (2 min)\n   - Welcome + episode context\n   - Why this matters NOW\n   - What listeners will learn\n\n3. SEGMENT 1: [Core topic] (8-10 min)\n   - Key points with stories/examples\n   - Transition question\n\n4. SEGMENT 2: [Deep dive] (8-10 min)\n   - Tactical/actionable content\n   - Real-world case study\n\n5. SEGMENT 3: [Audience value] (5-7 min)\n   - Listener Q&A or hot takes\n   - Contrarian perspective\n\n6. OUTRO (2 min)\n   - Key takeaway (1 sentence)\n   - Call to action\n   - Next episode teaser\n\nTONE: Conversational, like talking to a smart friend. Use contractions, casual transitions, and occasional humor.\n</script_structure>`,
+     source:"Community"},
+
+    {id:19, title:"Voice Clone & Style Replicator", avatar:"podcaster", expert:"@godofprompt", effectiveness:8,
+     description:"Forensic linguist framework for replicating anyone's writing/speaking voice. Analyzes vocabulary, sentence structure, tone, rhythm, and distinctive patterns.",
+     tags:["voice","style","branding","authenticity"],
+     useCase:"Use to make Claude write in your exact voice. Upload 3-5 samples of your writing/transcripts and Claude learns your style.",
+     promptText:`<role>You are a forensic linguist specializing in voice analysis and replication. You can identify and replicate any person's unique communication style.</role>\n\n<samples>\n[PASTE 3-5 SAMPLES OF YOUR WRITING OR PODCAST TRANSCRIPTS HERE]\n</samples>\n\n<analysis_task>\n1. VOCABULARY PROFILE\n   - Favorite words and phrases\n   - Jargon and technical terms used\n   - Words they NEVER use\n\n2. SENTENCE STRUCTURE\n   - Average sentence length\n   - Simple vs. complex ratio\n   - Use of rhetorical questions\n\n3. TONE MARKERS\n   - Formality level (1-10)\n   - Humor frequency and type\n   - Emotional range\n\n4. RHYTHM & PACING\n   - Paragraph length patterns\n   - Use of lists vs. prose\n   - Transition style\n\n5. DISTINCTIVE PATTERNS\n   - Signature phrases\n   - Opening/closing patterns\n   - Storytelling structure\n\nNow write a STYLE GUIDE I can paste into any future Claude conversation to replicate this voice perfectly.\n</analysis_task>`,
+     source:"godofprompt.ai"},
+
+    {id:20, title:"Content Repurposing Machine", avatar:"podcaster", expert:"@MillieMarconnni", effectiveness:9,
+     description:"Transforms a single podcast episode into 40+ pieces of content across all platforms. Proven to boost engagement 340% by one content creator.",
+     tags:["repurposing","scale","multi-platform","engagement"],
+     useCase:"Use after every podcast episode. Upload transcript and get a month of content from one conversation.",
+     promptText:`<role>You are a content strategist who transforms long-form content into multi-platform campaigns. Your record: 1 podcast episode = 42 pieces of content.</role>\n\n<transcript>\n[PASTE YOUR PODCAST TRANSCRIPT OR KEY NOTES]\n</transcript>\n\n<task>Extract and create:\n\n1. LINKEDIN (5 pieces)\n   - 1 long-form article (key insights reframed for professionals)\n   - 3 standalone posts (hook + insight + CTA)\n   - 1 carousel concept (slide-by-slide outline)\n\n2. TWITTER/X (10 pieces)\n   - 1 thread (8-10 tweets)\n   - 5 standalone tweets (quotable moments)\n   - 4 engagement tweets (questions/polls from episode topics)\n\n3. SHORT-FORM VIDEO (5 pieces)\n   - 5 clip concepts with timestamps\n   - Hook + payoff structure for each\n   - Suggested captions and hashtags\n\n4. NEWSLETTER (1 piece)\n   - Episode summary as valuable standalone content\n   - 3 key takeaways\n   - Subscriber-only insight\n\n5. BLOG POST (1 piece)\n   - SEO-optimized article from episode content\n   - Target keyword suggestions\n\nFor each piece: include the HOOK (first line that stops scrolling)\n</task>`,
+     source:"Community/x.com/MillieMarconnni"},
+
+    {id:21, title:"Meta-Prompt Generator (PromptMaster)", avatar:"podcaster", expert:"@theedmind", effectiveness:8,
+     description:"A prompt that generates perfect prompts for any content need. Especially useful for podcast planning, audio note organization, and content ideation.",
+     tags:["meta-prompt","generator","planning","versatile"],
+     useCase:"Use when you don't know exactly what prompt you need. Describe your goal and get a custom-crafted prompt.",
+     promptText:`You are PromptMaster - an AI that creates perfect prompts for other AI conversations.\n\nI will describe what I need to accomplish, and you will:\n\n1. Ask 3 clarifying questions to understand my exact need\n2. Create a comprehensive prompt that includes:\n   - Role assignment for Claude\n   - Detailed context section\n   - Specific task breakdown\n   - Output format specification\n   - 2-3 examples of desired output\n   - Constraints and guardrails\n3. Explain WHY each element of the prompt will improve results\n4. Offer 2 alternative versions (shorter/longer)\n\nMy goal: [DESCRIBE WHAT YOU NEED]\n\nIMPORTANT: The prompt you create should use XML tags for structure, include chain-of-thought instructions, and follow Claude's native formatting preferences.`,
+     source:"x.com/theedmind"},
+
+    // ===== INFLUENCER PROMPTS =====
+    {id:22, title:"Viral Content Formula", avatar:"influencer", expert:"@smratitiwa86867", effectiveness:8,
+     description:"21 mega prompts for viral content and growth strategies. Includes frameworks for Product Hunt launches, social media growth, and audience building.",
+     tags:["viral","growth","social-media","audience"],
+     useCase:"Use when you want to create content that spreads. Analyzes what makes content go viral and applies those patterns.",
+     promptText:`<role>You are a viral content strategist who has created 10+ posts with 1M+ impressions. You understand the psychology of sharing.</role>\n\n<my_niche>[YOUR NICHE/TOPIC]</my_niche>\n<my_platform>[PRIMARY PLATFORM]</my_platform>\n<my_audience>[DESCRIBE YOUR AUDIENCE]</my_audience>\n\n<task>\n1. VIRAL CONTENT ANALYSIS\n   - What's going viral in my niche RIGHT NOW?\n   - 5 patterns that make content shareable\n   - Emotional triggers that drive sharing (curiosity, outrage, inspiration, humor, identity)\n\n2. CONTENT IDEAS (10)\n   - For each: hook, format, emotional trigger, estimated engagement\n   - Mix of: educational, entertaining, controversial, inspirational\n   - Include 2 "pattern interrupt" ideas (unexpected formats)\n\n3. HOOK BANK (20 hooks)\n   - Curiosity hooks ("The thing nobody tells you about...")\n   - Contrarian hooks ("Stop doing X. Here's why...")\n   - Story hooks ("I lost $X doing Y. Here's what I learned...")\n   - Data hooks ("97% of people get this wrong...")\n\n4. POSTING STRATEGY\n   - Best times for my platform\n   - Engagement triggers to include\n   - CTA strategy that doesn't feel salesy\n</task>`,
+     source:"x.com/smratitiwa86867"},
+
+    {id:23, title:"Personal Brand Voice Generator", avatar:"influencer", expert:"AI-Branding Academy", effectiveness:8,
+     description:"Creates a complete personal brand voice profile including tone, vocabulary, story archetypes, and content pillars. Reduces editing time 60-70%.",
+     tags:["branding","voice","personal-brand","consistency"],
+     useCase:"Use once to establish your brand voice, then reference it in all future content creation prompts.",
+     promptText:`<role>You are a personal branding strategist who has built 100+ thought leadership brands on social media.</role>\n\n<about_me>\nName: [X]\nExpertise: [X]\nTarget audience: [X]\nPersonality traits: [X]\nValues: [X]\nUnique perspective: [X]\n3-5 writing samples: [PASTE SAMPLES]\n</about_me>\n\n<deliverables>\n1. BRAND VOICE PROFILE\n   - Tone spectrum (formal ←→ casual): where do you sit?\n   - Communication style (teacher/mentor/peer/provocateur)\n   - Signature phrases to use regularly\n   - Words/phrases to AVOID\n\n2. CONTENT PILLARS (4-5)\n   - Each with: topic, unique angle, audience value\n   - Content ratio recommendation\n\n3. STORY ARCHETYPES\n   - 3 recurring story types you should tell\n   - Template for each\n\n4. ENGAGEMENT STYLE\n   - How to respond to comments\n   - How to handle criticism\n   - How to build community\n\n5. REUSABLE CUSTOM INSTRUCTIONS\n   - A paragraph you can paste into any Claude conversation\n   - Ensures all content matches your voice\n</deliverables>`,
+     source:"aibranding.academy"},
+
+    {id:24, title:"10 Life-Changing Daily Prompts", avatar:"influencer", expert:"@aigleeson", effectiveness:7,
+     description:"Daily prompts for personal transformation and content creation. Covers morning planning, content ideation, audience engagement, and evening reflection.",
+     tags:["daily","routine","personal-growth","content"],
+     useCase:"Use these as daily rituals. Each prompt takes 5-10 minutes and compounds into massive results over time.",
+     promptText:`DAILY PROMPT SYSTEM FOR INFLUENCER GROWTH:\n\nMORNING (pick 1-2):\n\n1. INTENTION SETTER:\n"What is the ONE piece of content I could create today that would provide the most value to my audience of [X]? Consider current trends, my unique perspective, and what I'm genuinely excited about."\n\n2. IDEA GENERATOR:\n"Give me 5 content ideas for today based on: trending topics in [niche], questions my audience asks, and contrarian takes I could share. For each, write the first line (hook)."\n\nAFTERNOON:\n\n3. CONTENT REFINER:\n"I'm about to post this: [paste draft]. Make it: punchier, more specific, and add a hook that would make someone stop scrolling. Keep my voice."\n\n4. ENGAGEMENT PLANNER:\n"Suggest 5 thoughtful comments I could leave on posts in my niche today that would add value and naturally attract followers to my profile."\n\nEVENING:\n\n5. REFLECTION:\n"Today I posted [X] and got [X] engagement. What worked? What didn't? What should I do differently tomorrow? Be specific and actionable."`,
+     source:"x.com/aigleeson"},
+
+    // ===== WELLNESS PROMPTS =====
+    {id:25, title:"Morning Pages AI Journal", avatar:"wellness", expert:"@patrick_oshag", effectiveness:9,
+     description:"Claude organizes stream-of-consciousness audio notes into structured insights. Tracks sentiment, daily focus, to-dos, key ideas, messages to draft, and cross-references to past notes.",
+     tags:["journaling","wellness","mental-health","tracking"],
+     useCase:"Use every morning. Talk into your phone for 10 minutes, paste the transcript, and get organized insights with mood tracking.",
+     promptText:`<role>You are my personal journal analyst. You organize my stream-of-consciousness morning notes into actionable intelligence.</role>\n\n<instructions>\nAfter I share my morning thoughts, organize them into:\n\n1. SENTIMENT: Overall mood (positive / neutral / negative) with nuance\n2. DAILY FOCUS: What seems most important to me today (extract from subtext)\n3. KEY TO-DOS: Action items mentioned (explicit and implied)\n4. KEY IDEAS: Interesting thoughts worth developing further\n5. MESSAGES TO DRAFT: People I mentioned wanting to contact\n6. CROSS-REFERENCES: Connections to themes from previous sessions\n7. HEALTH SIGNALS: Any mentions of sleep, energy, stress, exercise, diet\n8. PATTERN ALERT: Recurring themes or concerns that keep showing up\n\nFormat consistently. Be concise. Flag anything that seems important but I might overlook.\n\nToday's notes:\n[PASTE TRANSCRIPT OR TYPE STREAM-OF-CONSCIOUSNESS]\n</instructions>`,
+     source:"x.com/patrick_oshag"},
+
+    {id:26, title:"Bloodwork & Health Data Analyzer", avatar:"wellness", expert:"@farzyness", effectiveness:8,
+     description:"Analyzes bloodwork results, genetic data, and supplement stacks to create personalized health optimization plans. Cross-references multiple data sources.",
+     tags:["health","bloodwork","supplements","personalized"],
+     useCase:"Use after getting lab results. Input your numbers and get a plain-English analysis with optimization suggestions.",
+     promptText:`<role>You are a functional medicine practitioner who interprets lab results through the lens of optimal health, not just "normal ranges." You understand that reference ranges are population averages, not optimal targets.</role>\n\n<disclaimer>This is for educational purposes only. Always consult your doctor before making health decisions.</disclaimer>\n\n<lab_results>\n[PASTE YOUR LAB RESULTS HERE - remove any personal identifiers]\n</lab_results>\n\n<analysis>\n1. RESULTS OVERVIEW\n   - Flag anything outside OPTIMAL range (not just reference range)\n   - Explain what each marker means in plain English\n   - Rate overall health picture: areas of strength and concern\n\n2. PATTERN ANALYSIS\n   - What do these markers suggest together?\n   - Any concerning combinations?\n   - Potential root causes for out-of-range values\n\n3. OPTIMIZATION SUGGESTIONS\n   - Lifestyle changes (sleep, exercise, stress, diet)\n   - Supplement considerations (with evidence level)\n   - Follow-up tests to consider\n\n4. QUESTIONS FOR YOUR DOCTOR\n   - 5 specific questions to ask at your next appointment\n   - Based on your results, what specialists might be relevant?\n\nIMPORTANT: Always note uncertainty. Use phrases like "this may suggest" not "this means."\n</analysis>`,
+     source:"x.com/farzyness / SiPhox Health"},
+
+    {id:27, title:"Brutally Honest Life Coach", avatar:"wellness", expert:"@nummanali", effectiveness:7,
+     description:"Persona-based coaching prompt that gives you honest, no-nonsense feedback on your habits, goals, and progress. Includes accountability tracking.",
+     tags:["coaching","accountability","habits","honest"],
+     useCase:"Use weekly for honest self-assessment. Don't use this if you want feel-good responses - this prompt pushes you.",
+     promptText:`<role>You are a brutally honest life coach. You care deeply about my success, which is why you refuse to sugarcoat anything. You ask tough questions and call out excuses.</role>\n\n<my_update>\nThis week I:\n- [What I accomplished]\n- [What I didn't do]\n- [How I'm feeling]\n- [My biggest challenge]\n- [My goals for next week]\n</my_update>\n\n<coaching_framework>\n1. REALITY CHECK\n   - What did I actually accomplish vs. what I said I would?\n   - Where am I making excuses?\n   - What pattern do you see?\n\n2. TOUGH QUESTIONS (ask 3)\n   - Questions I'm avoiding asking myself\n   - Questions that challenge my assumptions\n\n3. STRATEGIC ADVICE\n   - What's the ONE thing that would move the needle most?\n   - What should I STOP doing?\n   - What habit am I neglecting?\n\n4. ACCOUNTABILITY\n   - Set 3 specific, measurable commitments for next week\n   - Include consequences for not following through\n   - Identify potential obstacles and preemptive solutions\n\nDon't be mean. Be honest. There's a difference.\n</coaching_framework>`,
+     source:"x.com/nummanali"},
+
+    {id:28, title:"Health & Productivity Optimizer", avatar:"wellness", expert:"@heynavtoor", effectiveness:7,
+     description:"700+ mega prompts extended to health management. Covers sleep optimization, exercise programming, nutrition planning, and energy management.",
+     tags:["optimization","energy","sleep","exercise"],
+     useCase:"Use to build personalized health routines based on your schedule, preferences, and goals.",
+     promptText:`<role>You are a health optimization coach who combines evidence-based medicine with practical lifestyle design. You understand that health is the foundation of productivity.</role>\n\n<my_profile>\nAge: [X]\nSleep: [hours/quality]\nExercise: [current routine]\nDiet: [general approach]\nStress level: [1-10]\nEnergy pattern: [morning person/night owl/variable]\nBiggest health complaint: [X]\nGoal: [X]\n</my_profile>\n\n<optimization_plan>\n1. SLEEP PROTOCOL\n   - Ideal sleep/wake times for my chronotype\n   - Pre-sleep routine (last 2 hours)\n   - Environment optimization\n   - Supplements to consider (with evidence)\n\n2. MOVEMENT PLAN\n   - Weekly exercise schedule fitting my life\n   - Focus on: strength, cardio, mobility, recovery\n   - Minimum effective dose (for busy weeks)\n\n3. NUTRITION FRAMEWORK\n   - Not a diet - an eating framework\n   - Meal timing for my energy pattern\n   - Key nutrients to prioritize\n   - Simple meal templates\n\n4. ENERGY MANAGEMENT\n   - Map high-energy tasks to high-energy times\n   - Recovery protocols for stressful days\n   - Weekly rhythm (intense vs. recovery days)\n\n5. TRACKING\n   - What to measure weekly (keep it simple)\n   - Warning signs to watch for\n   - Monthly review questions\n</optimization_plan>`,
+     source:"x.com/heynavtoor"},
+
+    // ===== INVESTOR PROMPTS =====
+    {id:29, title:"12 McKinsey-Level Market Research Prompts", avatar:"investor", expert:"@socialwithaayan", effectiveness:9,
+     description:"AI can now do market research like McKinsey for free. 12 Claude prompts that replace $5,000 consultant work for industry analysis, competitive intelligence, and market sizing.",
+     tags:["McKinsey","research","market-sizing","professional"],
+     useCase:"Use before any major investment decision. Get institutional-quality research without the consulting fees.",
+     promptText:`<role>You are a McKinsey engagement manager with 15 years of experience in market research and competitive intelligence.</role>\n\n<research_brief>\nIndustry: [X]\nSpecific question: [X]\nInvestment thesis: [X]\nTime horizon: [X]\n</research_brief>\n\n<deliverables>\n1. INDUSTRY OVERVIEW\n   - Market size (current + projected CAGR)\n   - Key growth drivers and headwinds\n   - Regulatory landscape\n   - Technology disruption risks\n\n2. COMPETITIVE DYNAMICS\n   - Market share map (top 10 players)\n   - Strategic group analysis\n   - Barriers to entry assessment\n   - Likely M&A targets and acquirers\n\n3. VALUE CHAIN ANALYSIS\n   - Where is margin concentrated?\n   - Which segments are commoditizing?\n   - Where is value migrating?\n\n4. INVESTMENT IMPLICATIONS\n   - Bull case / Base case / Bear case\n   - Key assumptions to monitor\n   - Catalysts and risks timeline\n   - Recommended position sizing framework\n\nCite your reasoning at each step. Flag assumptions clearly. Distinguish between data and inference.\n</deliverables>`,
+     source:"x.com/socialwithaayan"},
+
+    {id:30, title:"DCF & Financial Modeling Suite", avatar:"investor", expert:"@alex_prompter", effectiveness:9,
+     description:"5 prompts generating $50K-quality financial analysis. Covers DCF valuation, scenario analysis, comparable company analysis, and sensitivity tables.",
+     tags:["DCF","valuation","financial-model","institutional"],
+     useCase:"Use for any stock analysis or business valuation. Input financials and get institutional-grade analysis.",
+     promptText:`<role>You are a senior equity research analyst at a bulge bracket investment bank. You build financial models that fund managers pay $50K+ for.</role>\n\n<company>\nName: [X]\nTicker: [X]\nRecent financials: [paste key metrics or describe]\nIndustry: [X]\n</company>\n\n<model_request>\n1. DCF VALUATION\n   - Revenue build (segment-level, 5-year projection)\n   - Margin assumptions with rationale\n   - WACC calculation (show all inputs)\n   - Terminal value (both perpetuity growth + exit multiple)\n   - Implied share price range\n\n2. COMPARABLE ANALYSIS\n   - Select 5-7 relevant peers\n   - Key multiples: EV/Revenue, EV/EBITDA, P/E, PEG\n   - Where does our company trade relative to peers?\n   - Fair value based on peer median\n\n3. SCENARIO ANALYSIS\n   - Bull / Base / Bear cases\n   - Key variable sensitivity (revenue growth, margins, multiple)\n   - Probability-weighted fair value\n\n4. INVESTMENT THESIS\n   - 3 reasons to buy\n   - 3 key risks\n   - Catalyst timeline\n   - Recommended entry point and position size\n\nCRITICAL: State all assumptions clearly. Show your work. Flag where you're uncertain.\n</model_request>`,
+     source:"x.com/alex_prompter"},
+
+    {id:31, title:"Investment Banking Mega-Prompt Suite", avatar:"investor", expert:"@alxnderhughes", effectiveness:9,
+     description:"Elite investment banker-style prompts for thesis building, risk assessment, earnings call analysis, and valuation modeling. Full toolkit for professional investors.",
+     tags:["IB","thesis","risk","earnings"],
+     useCase:"Use for deep-dive analysis on any public company. Covers the full toolkit an investment banker would use.",
+     promptText:`<role>You are a managing director at Goldman Sachs with expertise in [SECTOR]. You're preparing materials for a client presentation.</role>\n\n<company>[COMPANY NAME / TICKER]</company>\n\n<analysis_modules>\n\nMODULE 1: EARNINGS CALL ANALYSIS\n- Key management commentary themes\n- Guidance changes and implications\n- Analyst questions that revealed concerns\n- Read between the lines: what wasn't said?\n\nMODULE 2: INVESTMENT THESIS\n- Core thesis in 3 sentences\n- 5 supporting data points\n- Key assumption that must be true\n- Time horizon and target return\n\nMODULE 3: RISK ASSESSMENT\n- Systematic risks (macro, rates, regulation)\n- Idiosyncratic risks (execution, competition, management)\n- Tail risks (black swan scenarios)\n- Risk mitigation strategies\n\nMODULE 4: VALUATION\n- Sum-of-parts analysis\n- Precedent transactions (relevant M&A)\n- LBO analysis (PE perspective)\n- Implied returns at current price\n\nSelect module: [1/2/3/4 or ALL]\n</analysis_modules>`,
+     source:"x.com/alxnderhughes"},
+
+    {id:32, title:"Full Financial Model Builder", avatar:"investor", expert:"@TechieSapien", effectiveness:9,
+     description:"Builds complete 11-tab financial models including 3-statement model, LBO, M&A accretion/dilution, and comps analysis. Replaces grunt work in sophisticated investing.",
+     tags:["model","LBO","M&A","3-statement"],
+     useCase:"Use to build complete financial models from scratch. Especially powerful when combined with Claude's Excel capabilities.",
+     promptText:`<role>You are a financial modeling specialist who has built 500+ models for PE firms and investment banks. You follow best practices: clear assumptions, linked statements, and audit-ready structure.</role>\n\n<model_type>[3-STATEMENT / LBO / M&A / COMPS - pick one]</model_type>\n\n<company_data>\n[PASTE KEY FINANCIAL DATA]\n</company_data>\n\n<instructions>\nBuild the model following this methodology:\n\n1. COMMIT TO APPROACH FIRST\n   - State your modeling methodology\n   - List all assumptions BEFORE calculating\n   - Explain WHY each assumption makes sense\n\n2. ASSUMPTIONS PAGE\n   - Revenue drivers (volume x price, segment build)\n   - Cost structure (fixed vs variable)\n   - Working capital assumptions\n   - CapEx and D&A\n   - Debt terms and structure\n\n3. MODEL BUILD\n   - Income Statement (5 years)\n   - Balance Sheet (5 years)\n   - Cash Flow Statement (5 years)\n   - All three statements must link\n\n4. OUTPUT\n   - Key ratios and metrics\n   - Sensitivity analysis on 2 key variables\n   - Implied valuation range\n   - Investment recommendation\n\n5. VERIFICATION\n   - Balance sheet must balance (A = L + E)\n   - Cash flow must reconcile\n   - Flag any circular references\n</instructions>`,
+     source:"x.com/TechieSapien / Nate's Newsletter"},
+
+    {id:33, title:"Institutional Equity Research Report", avatar:"investor", expert:"Claude Equity Research Plugin", effectiveness:8,
+     description:"Generates professional buy/sell recommendations with comprehensive fundamental analysis, technical indicators, and risk assessment for any stock.",
+     tags:["equity-research","buy-sell","fundamental","technical"],
+     useCase:"Use for any stock you're considering. Get a professional-grade research report with clear recommendation.",
+     promptText:`<role>You are a senior equity research analyst publishing a formal initiation report.</role>\n\n<stock>[TICKER / COMPANY NAME]</stock>\n\n<report_structure>\n1. EXECUTIVE SUMMARY\n   - Rating: BUY / HOLD / SELL\n   - Target price: $X (methodology)\n   - Key thesis in 3 bullets\n\n2. COMPANY OVERVIEW\n   - Business model description\n   - Revenue mix by segment/geography\n   - Management quality assessment\n   - Corporate governance review\n\n3. INDUSTRY ANALYSIS\n   - Market size and growth\n   - Competitive positioning\n   - Secular tailwinds/headwinds\n\n4. FINANCIAL ANALYSIS\n   - Revenue and earnings trends (3yr history)\n   - Margin analysis and trajectory\n   - Balance sheet health (leverage, liquidity)\n   - Cash flow quality\n   - Return on capital metrics\n\n5. VALUATION\n   - Multiple approaches (DCF, comps, precedent)\n   - Scenario analysis (bull/base/bear)\n   - Implied upside/downside\n\n6. RISKS\n   - Top 5 risks to thesis\n   - Mitigating factors\n\n7. CATALYSTS\n   - Near-term (0-6 months)\n   - Medium-term (6-18 months)\n\nDISCLAIMER: For educational purposes only. Not financial advice.\n</report_structure>`,
+     source:"GitHub: claude-equity-research"},
+
+    // ===== CROSS-AVATAR PROMPTS =====
+    {id:34, title:"CARE Framework (Universal)", avatar:"innovator", expert:"Community Best Practice", effectiveness:9,
+     description:"The universal Claude prompting framework: Context + Ask + Rules + Examples. Works across all use cases and dramatically improves output quality.",
+     tags:["framework","universal","best-practice","foundational"],
+     useCase:"Use as the foundation for ANY prompt you write. This is the meta-framework that makes everything else work better.",
+     promptText:`THE CARE FRAMEWORK - Apply to any prompt:\n\nC - CONTEXT\nProvide rich background information:\n- Who you are and your expertise level\n- What you've already tried\n- Relevant constraints (time, budget, audience)\n- Industry/domain context\n\nA - ASK\nMake your request crystal clear:\n- Specific deliverable (not vague)\n- Scope boundaries\n- Decision criteria\n\nR - RULES\nSet constraints and guardrails:\n- Format requirements\n- Tone and style\n- Things to avoid\n- Length limits\n- Quality standards\n\nE - EXAMPLES\nShow don't tell:\n- 2-3 examples of good output\n- 1 example of what you DON'T want\n- Reference style from existing content\n\nTEMPLATE:\n<context>[Background]</context>\n<ask>[Specific request]</ask>\n<rules>[Constraints]</rules>\n<examples>[Good and bad examples]</examples>`,
+     source:"Anthropic / Community"},
+
+    {id:35, title:"Claude Skills Setup (Replace Freelancers)", avatar:"ceo", expert:"@alex_prompter", effectiveness:9,
+     description:"Claude Skills are reusable instruction sets built once that Claude loads automatically. Like hiring a specialist who never forgets your brand guidelines. Replaced $4K-$10K/month in freelancers.",
+     tags:["skills","automation","ROI","reusable"],
+     useCase:"Set up once for each role you need (copywriter, analyst, SEO specialist). Then Claude automatically applies the right expertise.",
+     promptText:`HOW TO BUILD CLAUDE SKILLS:\n\n1. IDENTIFY THE ROLE\n   - What freelancer/employee does this replace?\n   - What are the recurring tasks?\n   - What's the quality standard?\n\n2. CREATE THE SKILL INSTRUCTION SET\n   <skill_name>[e.g., "SEO Content Writer"]</skill_name>\n   <expertise>[Detailed description of the role's expertise]</expertise>\n   <brand_guidelines>[Your specific voice, tone, vocabulary]</brand_guidelines>\n   <quality_standards>[What "good" looks like - with examples]</quality_standards>\n   <workflow>[Step-by-step process to follow every time]</workflow>\n   <output_format>[Exact deliverable format]</output_format>\n\n3. TEST & REFINE\n   - Run 5 different tasks through the skill\n   - Compare output to what you'd accept from a freelancer\n   - Refine instructions based on gaps\n\n4. SAVE AS PROJECT\n   - Store in Claude Projects for persistent access\n   - Reference in any conversation\n\nThis approach replaced:\n- Copywriting ($4,000/mo)\n- Data analysis ($3,000/mo)\n- SEO specialist ($3,000/mo)`,
+     source:"x.com/alex_prompter"},
+
+    {id:36, title:"Concept Elevation Prompt", avatar:"innovator", expert:"@mattshumer_", effectiveness:8,
+     description:"Takes any existing prompt and instantly elevates it - making it more concise, effective, and Claude-optimized. A prompt that improves other prompts.",
+     tags:["meta-prompt","optimization","improvement","universal"],
+     useCase:"Use when you have a prompt that's 'okay' but not great. This will analyze and upgrade it.",
+     promptText:`<role>You are a world-class prompt engineer who has optimized thousands of prompts for Claude. You understand XML structure, chain-of-thought, role-playing, and all advanced techniques.</role>\n\n<original_prompt>\n[PASTE YOUR EXISTING PROMPT HERE]\n</original_prompt>\n\n<task>\n1. DIAGNOSIS\n   - What's working in this prompt?\n   - What's missing or weak?\n   - Common failure modes it would produce?\n\n2. ELEVATED VERSION\n   - Rewrite the prompt using best practices:\n     * XML tags for structure\n     * Clear role assignment\n     * Specific output format\n     * Chain-of-thought instructions where needed\n     * Appropriate constraints\n   - Make it more concise (remove fluff)\n   - Make it more specific (add missing context)\n\n3. EXPLAIN CHANGES\n   - For each major change, explain WHY it improves results\n\n4. VARIANTS\n   - Shorter version (for quick tasks)\n   - More detailed version (for critical tasks)\n</task>`,
+     source:"x.com/mattshumer_"}
+];
+
+const EXPERTS = [
+    {handle:"@godofprompt", name:"God of Prompt", specialty:"Reverse-engineered prompts from top companies. 30K+ prompt library covering business, marketing, SEO, and operations.", avatars:["innovator","ceo","podcaster","influencer"], followers:"100K+", url:"godofprompt.ai"},
+    {handle:"@ChrisLaubAI", name:"Chris Laub", specialty:"End-to-end mega prompts for full product build cycles. Built 47 automation agents with single prompts.", avatars:["innovator","podcaster"], followers:"50K+", url:"x.com/ChrisLaubAI"},
+    {handle:"@alex_prompter", name:"Alex Prompter", specialty:"Claude mastery (3yr user). Marketing automation, n8n workflows, Claude Skills. Replaced $10K/mo in freelancers.", avatars:["marketer","innovator","investor","ceo"], followers:"80K+", url:"alexnorthstar.gumroad.com"},
+    {handle:"@MillieMarconnni", name:"Millie Marconni", specialty:"Mega prompts for startup teams, content repurposing (40+ pieces from 1 episode), 340% engagement boost.", avatars:["innovator","ceo","podcaster","influencer","investor"], followers:"60K+", url:"x.com/MillieMarconnni"},
+    {handle:"@socialwithaayan", name:"Muhammad Ayan", specialty:"McKinsey-level market research prompts for free. 12 prompts replacing $5K consultant work.", avatars:["investor","marketer"], followers:"40K+", url:"x.com/socialwithaayan"},
+    {handle:"@noelcetaSEO", name:"Noel Ceta", specialty:"SEO content prompts that rank page 1-2. Beats AI detectors. E-E-A-T optimization frameworks.", avatars:["marketer"], followers:"30K+", url:"linkedin.com/noelceta"},
+    {handle:"@mattshumer_", name:"Matt Shumer", specialty:"AI entrepreneur. Multi-persona validation, concept elevation, GPT-to-Claude conversion.", avatars:["innovator"], followers:"150K+", url:"github.com/mshumer"},
+    {handle:"@patrick_oshag", name:"Patrick O'Shaughnessy", specialty:"Morning pages AI journaling. Health sentiment tracking. Cross-reference analysis over time.", avatars:["wellness"], followers:"200K+", url:"x.com/patrick_oshag"},
+    {handle:"@farzyness", name:"Farzy", specialty:"Genetic and health data analysis. Bloodwork interpretation. Personalized supplement stacks.", avatars:["wellness"], followers:"25K+", url:"x.com/farzyness"},
+    {handle:"@heyrimsha", name:"Rimsha", specialty:"700+ mega prompts for full productivity engines across all business functions.", avatars:["ceo"], followers:"45K+", url:"x.com/heyrimsha"},
+    {handle:"@AIFrontliner", name:"AI Frontliner", specialty:"Business-building prompts pushing Claude's limits. Strategic planning and economic strategies.", avatars:["innovator","ceo"], followers:"35K+", url:"x.com/AIFrontliner"},
+    {handle:"@AzibaHQ", name:"Aziba", specialty:"Iterative context-building prompts for progressive refinement of complex business outputs.", avatars:["ceo"], followers:"20K+", url:"x.com/AzibaHQ"},
+    {handle:"@dasilvashadow", name:"DaSilva Shadow", specialty:"Affiliate marketing angles, direct response copy, sales funnel optimization.", avatars:["marketer"], followers:"15K+", url:"x.com/dasilvashadow"},
+    {handle:"@thisdudelikesAI", name:"ThisDudeLikesAI", specialty:"Reverse-engineered consultant prompts from McKinsey, BCG, Bain for market research.", avatars:["marketer","investor"], followers:"30K+", url:"x.com/thisdudelikesAI"},
+    {handle:"@sparksalespro", name:"Spark Sales Pro", specialty:"21 tested sales mega-prompts for campaigns. Revenue-first marketing approach.", avatars:["marketer"], followers:"20K+", url:"x.com/sparksalespro"},
+    {handle:"@theedmind", name:"The Ed Mind", specialty:"Meta-prompts for generating perfect prompts. PromptMaster framework for content planning.", avatars:["podcaster"], followers:"15K+", url:"x.com/theedmind"},
+    {handle:"@smratitiwa86867", name:"Smrati", specialty:"21 mega prompts for viral content. Product Hunt launches. Growth hacking frameworks.", avatars:["innovator","influencer","podcaster"], followers:"25K+", url:"x.com/smratitiwa86867"},
+    {handle:"@aigleeson", name:"AI Gleeson", specialty:"Daily prompts for personal transformation and influencer persona building.", avatars:["influencer"], followers:"20K+", url:"x.com/aigleeson"},
+    {handle:"@s_mohinii", name:"S Mohini", specialty:"Startup-like prompts for personal branding and social media growth.", avatars:["influencer"], followers:"15K+", url:"x.com/s_mohinii"},
+    {handle:"@nummanali", name:"Numman Ali", specialty:"Persona-based coaching prompts including brutally honest life coaches.", avatars:["wellness"], followers:"20K+", url:"x.com/nummanali"},
+    {handle:"@heynavtoor", name:"Navtoor", specialty:"700+ mega prompts for productivity and personal health optimization.", avatars:["wellness"], followers:"30K+", url:"x.com/heynavtoor"},
+    {handle:"@MugenXBT", name:"Mugen", specialty:"Advanced health prompting. Explicit health instructions for better research iteration.", avatars:["wellness"], followers:"15K+", url:"x.com/MugenXBT"},
+    {handle:"@alxnderhughes", name:"Alexander Hughes", specialty:"Investment banker-style mega prompts. Elite thesis building, earnings analysis, valuation models.", avatars:["investor"], followers:"30K+", url:"x.com/alxnderhughes"},
+    {handle:"@TechieSapien", name:"Techie Sapien", specialty:"Full financial models (LBO, M&A, comps). Replaces analyst grunt work.", avatars:["investor"], followers:"25K+", url:"x.com/TechieSapien"}
+];
+
+const COLORS = ['#4CC9F0','#F72585','#7209B7','#3A0CA3','#4361EE','#06D6A0','#FFD166'];
+const AVATAR_COLORS = {innovator:'#4CC9F0', ceo:'#F72585', marketer:'#7209B7', podcaster:'#4361EE', influencer:'#FFD166', wellness:'#06D6A0', investor:'#9b7ff0'};
+const AVATAR_LABELS = {innovator:'Innovator', ceo:'CEO', marketer:'Marketer', podcaster:'Podcaster', influencer:'Influencer', wellness:'Wellness', investor:'Investor'};
+
+// ===================== DASHBOARD CLASS =====================
+class Dashboard {
+    constructor() {
+        this.rawData = PROMPTS;
+        this.filteredData = PROMPTS;
+        this.charts = {};
+        this.currentTab = 'all';
+        this.init();
+    }
+
+    init() {
+        this.renderKPIs();
+        this.renderCharts();
+        this.renderPrompts();
+        this.renderExperts();
+        this.renderLearning();
+    }
+
+    applyFilters() {
+        const avatar = document.getElementById('filter-avatar').value;
+        const rating = document.getElementById('filter-rating').value;
+        const search = document.getElementById('search-input').value.toLowerCase();
+
+        this.filteredData = this.rawData.filter(p => {
+            if (avatar !== 'all' && p.avatar !== avatar) return false;
+            if (rating !== 'all' && p.effectiveness < parseInt(rating)) return false;
+            if (search && !p.title.toLowerCase().includes(search) && !p.description.toLowerCase().includes(search) && !p.tags.some(t => t.includes(search)) && !p.expert.toLowerCase().includes(search)) return false;
+            return true;
+        });
+
+        this.renderKPIs();
+        this.updateCharts();
+        this.renderPrompts();
+    }
+
+    setTab(tab) {
+        this.currentTab = tab;
+        document.querySelectorAll('.avatar-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+        const promptsContainer = document.getElementById('prompts-container');
+        const expertsContainer = document.getElementById('experts-container');
+        const learnContainer = document.getElementById('learn-container');
+
+        if (tab === 'experts') {
+            promptsContainer.style.display = 'none';
+            expertsContainer.style.display = 'block';
+            learnContainer.style.display = 'none';
+        } else if (tab === 'learn') {
+            promptsContainer.style.display = 'none';
+            expertsContainer.style.display = 'none';
+            learnContainer.style.display = 'block';
+        } else {
+            promptsContainer.style.display = 'grid';
+            expertsContainer.style.display = 'none';
+            learnContainer.style.display = 'none';
+            if (tab !== 'all') {
+                document.getElementById('filter-avatar').value = tab;
+            } else {
+                document.getElementById('filter-avatar').value = 'all';
+            }
+            this.applyFilters();
+        }
+    }
+
+    renderKPIs() {
+        const data = this.filteredData;
+        document.getElementById('kpi-total').textContent = data.length;
+        const experts = [...new Set(data.map(p => p.expert))];
+        document.getElementById('kpi-experts').textContent = experts.length;
+        const avg = data.length > 0 ? (data.reduce((s,p) => s + p.effectiveness, 0) / data.length).toFixed(1) : '0';
+        document.getElementById('kpi-avg').textContent = avg;
+        document.getElementById('kpi-elite').textContent = data.filter(p => p.effectiveness >= 9).length;
+    }
+
+    renderCharts() {
+        this.renderAvatarDist();
+        this.renderEffectivenessChart();
+        this.renderExpertChart();
+        this.renderAvgRatingChart();
+    }
+
+    updateCharts() {
+        // Avatar Distribution
+        const avatarCounts = {};
+        Object.keys(AVATAR_LABELS).forEach(a => avatarCounts[a] = 0);
+        this.filteredData.forEach(p => avatarCounts[p.avatar]++);
+        this.charts.avatarDist.data.datasets[0].data = Object.values(avatarCounts);
+        this.charts.avatarDist.update('none');
+
+        // Effectiveness
+        const effCounts = [0,0,0,0,0];
+        this.filteredData.forEach(p => {
+            if (p.effectiveness >= 9) effCounts[4]++;
+            else if (p.effectiveness >= 8) effCounts[3]++;
+            else if (p.effectiveness >= 7) effCounts[2]++;
+            else if (p.effectiveness >= 6) effCounts[1]++;
+            else effCounts[0]++;
+        });
+        this.charts.effectiveness.data.datasets[0].data = effCounts;
+        this.charts.effectiveness.update('none');
+
+        // Expert counts
+        const expertCounts = {};
+        this.filteredData.forEach(p => { expertCounts[p.expert] = (expertCounts[p.expert]||0) + 1; });
+        const sortedExperts = Object.entries(expertCounts).sort((a,b) => b[1]-a[1]).slice(0,8);
+        this.charts.experts.data.labels = sortedExperts.map(e => e[0]);
+        this.charts.experts.data.datasets[0].data = sortedExperts.map(e => e[1]);
+        this.charts.experts.update('none');
+
+        // Avg rating by avatar
+        const avatarRatings = {};
+        Object.keys(AVATAR_LABELS).forEach(a => avatarRatings[a] = {sum:0,count:0});
+        this.filteredData.forEach(p => { avatarRatings[p.avatar].sum += p.effectiveness; avatarRatings[p.avatar].count++; });
+        this.charts.avgRating.data.datasets[0].data = Object.keys(AVATAR_LABELS).map(a => avatarRatings[a].count > 0 ? (avatarRatings[a].sum / avatarRatings[a].count).toFixed(1) : 0);
+        this.charts.avgRating.update('none');
+    }
+
+    renderAvatarDist() {
+        const counts = {};
+        Object.keys(AVATAR_LABELS).forEach(a => counts[a] = 0);
+        this.rawData.forEach(p => counts[p.avatar]++);
+
+        const ctx = document.getElementById('chart-avatar-dist').getContext('2d');
+        this.charts.avatarDist = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.values(AVATAR_LABELS),
+                datasets: [{data: Object.values(counts), backgroundColor: Object.values(AVATAR_COLORS).map(c=>c+'CC'), borderColor: '#1a1a2e', borderWidth: 2}]
+            },
+            options: {responsive:true, maintainAspectRatio:false, cutout:'55%', plugins:{legend:{position:'right',labels:{color:'#8888aa',usePointStyle:true,padding:12,font:{size:12}}}}}
+        });
+    }
+
+    renderEffectivenessChart() {
+        const effCounts = [0,0,0,0,0];
+        this.rawData.forEach(p => {
+            if (p.effectiveness >= 9) effCounts[4]++;
+            else if (p.effectiveness >= 8) effCounts[3]++;
+            else if (p.effectiveness >= 7) effCounts[2]++;
+            else if (p.effectiveness >= 6) effCounts[1]++;
+            else effCounts[0]++;
+        });
+
+        const ctx = document.getElementById('chart-effectiveness').getContext('2d');
+        this.charts.effectiveness = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['6 & below', '6-7', '7-8', '8-9', '9-10'],
+                datasets: [{label:'Prompts', data:effCounts, backgroundColor:['#EF476F99','#FFD16699','#FFD166CC','#06D6A0CC','#4CC9F0CC'], borderRadius:6}]
+            },
+            options: {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{display:false},ticks:{color:'#8888aa'}},y:{grid:{color:'#2a2a4a'},ticks:{color:'#8888aa'}}}}
+        });
+    }
+
+    renderExpertChart() {
+        const expertCounts = {};
+        this.rawData.forEach(p => { expertCounts[p.expert] = (expertCounts[p.expert]||0) + 1; });
+        const sorted = Object.entries(expertCounts).sort((a,b) => b[1]-a[1]).slice(0,8);
+
+        const ctx = document.getElementById('chart-experts').getContext('2d');
+        this.charts.experts = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sorted.map(e=>e[0]),
+                datasets: [{label:'Prompts', data:sorted.map(e=>e[1]), backgroundColor:COLORS.map(c=>c+'CC'), borderRadius:6}]
+            },
+            options: {responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{grid:{color:'#2a2a4a'},ticks:{color:'#8888aa'}},y:{grid:{display:false},ticks:{color:'#8888aa',font:{size:11}}}}}
+        });
+    }
+
+    renderAvgRatingChart() {
+        const avatarRatings = {};
+        Object.keys(AVATAR_LABELS).forEach(a => avatarRatings[a] = {sum:0,count:0});
+        this.rawData.forEach(p => { avatarRatings[p.avatar].sum += p.effectiveness; avatarRatings[p.avatar].count++; });
+
+        const ctx = document.getElementById('chart-avg-rating').getContext('2d');
+        this.charts.avgRating = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: Object.values(AVATAR_LABELS),
+                datasets: [{
+                    label:'Avg Rating',
+                    data: Object.keys(AVATAR_LABELS).map(a => avatarRatings[a].count > 0 ? (avatarRatings[a].sum / avatarRatings[a].count).toFixed(1) : 0),
+                    borderColor: '#4CC9F0', backgroundColor: '#4CC9F020', pointBackgroundColor: '#4CC9F0', pointBorderColor: '#fff', pointRadius: 4
+                }]
+            },
+            options: {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{r:{grid:{color:'#2a2a4a'},angleLines:{color:'#2a2a4a'},pointLabels:{color:'#8888aa',font:{size:11}},ticks:{display:false},min:6,max:10}}}
+        });
+    }
+
+    renderPrompts() {
+        const container = document.getElementById('prompts-container');
+        if (this.filteredData.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);grid-column:1/-1;">No prompts match your filters. Try adjusting your search.</div>';
+            return;
+        }
+        container.innerHTML = this.filteredData.map(p => {
+            const effClass = p.effectiveness >= 9 ? 'eff-high' : p.effectiveness >= 7 ? 'eff-med' : 'eff-low';
+            const avClass = 'av-' + p.avatar;
+            return `
+            <div class="prompt-card" onclick="dashboard.showPrompt(${p.id})" style="cursor:pointer">
+                <div class="avatar-badge ${avClass}">${AVATAR_LABELS[p.avatar]}</div>
+                <div class="card-header">
+                    <div class="prompt-title">${p.title}</div>
+                    <div class="effectiveness ${effClass}">${p.effectiveness}/10</div>
+                </div>
+                <div class="expert">${p.expert}</div>
+                <div class="description">${p.description}</div>
+                <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                <div class="use-case"><strong>When to use:</strong> ${p.useCase}</div>
+            </div>`;
+        }).join('');
+    }
+
+    showPrompt(id) {
+        const p = PROMPTS.find(pr => pr.id === id);
+        if (!p) return;
+        const modal = document.getElementById('modal-content');
+        const effClass = p.effectiveness >= 9 ? 'eff-high' : p.effectiveness >= 7 ? 'eff-med' : 'eff-low';
+        modal.innerHTML = `
+            <button class="close-btn" onclick="dashboard.closeModal()">&times;</button>
+            <h3>${p.title}</h3>
+            <div style="margin:8px 0"><span class="effectiveness ${effClass}" style="display:inline-flex">${p.effectiveness}/10 Effectiveness</span></div>
+            <div class="meta-info">
+                <span><strong>Expert:</strong> ${p.expert}</span>
+                <span><strong>Avatar:</strong> ${AVATAR_LABELS[p.avatar]}</span>
+                <span><strong>Source:</strong> ${p.source}</span>
+            </div>
+            <p style="color:var(--text-secondary);margin:12px 0">${p.description}</p>
+            <h4 style="margin-top:16px;color:var(--accent-1)">The Prompt (Copy & Paste Ready)</h4>
+            <div class="prompt-text" id="prompt-text-${p.id}">${p.promptText.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+            <button class="copy-btn" onclick="dashboard.copyPrompt(${p.id})">Copy Prompt</button>
+            <div class="meta-info" style="margin-top:16px">
+                <span><strong>When to use:</strong> ${p.useCase}</span>
+                <span><strong>Tags:</strong> ${p.tags.join(', ')}</span>
+            </div>
+        `;
+        document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    closeModal() {
+        document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    copyPrompt(id) {
+        const p = PROMPTS.find(pr => pr.id === id);
+        if (p) {
+            navigator.clipboard.writeText(p.promptText).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy Prompt', 2000);
+            });
+        }
+    }
+
+    renderExperts() {
+        const container = document.getElementById('experts-container');
+        container.innerHTML = `
+            <h2 class="section-header">Expert Directory (${EXPERTS.length} Prompt Engineers)</h2>
+            <div class="expert-grid">
+                ${EXPERTS.map(e => `
+                    <div class="expert-card">
+                        <div class="handle">${e.handle}</div>
+                        <div style="font-size:13px;color:var(--text-primary);margin-bottom:4px">${e.name}</div>
+                        <div class="specialty">${e.specialty}</div>
+                        <div class="avatar-tags">
+                            ${e.avatars.map(a => `<span class="avatar-tag-small av-${a}">${AVATAR_LABELS[a]}</span>`).join('')}
+                        </div>
+                        <div style="margin-top:8px;font-size:11px;color:var(--text-muted)">Followers: ${e.followers} &bull; ${e.url}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    renderLearning() {
+        const container = document.getElementById('learn-container');
+        container.innerHTML = `
+            <div class="learning-section">
+                <h2>Prompting Frameworks & Best Practices</h2>
+                <p style="color:var(--text-secondary);margin-bottom:20px">Master these 12 frameworks to get the most out of every prompt in this library.</p>
+
+                <div class="framework-grid">
+                    <div class="framework-card">
+                        <h4>1. CARE Framework (Universal)</h4>
+                        <p>The foundational framework used by all top prompt engineers. Every great prompt has these 4 elements.</p>
+                        <pre>C - CONTEXT: Rich background info
+A - ASK: Crystal clear request
+R - RULES: Constraints & guardrails
+E - EXAMPLES: Show, don't tell</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>2. XML Tag Structure</h4>
+                        <p>Claude was trained to recognize XML tags. Using them dramatically improves output quality vs. plain text or markdown.</p>
+                        <pre>&lt;role&gt;Expert identity&lt;/role&gt;
+&lt;context&gt;Background info&lt;/context&gt;
+&lt;task&gt;What to do&lt;/task&gt;
+&lt;output_format&gt;How to format&lt;/output_format&gt;
+&lt;examples&gt;Good outputs&lt;/examples&gt;</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>3. Chain-of-Thought (CoT)</h4>
+                        <p>Force Claude to think step-by-step. Proven to improve reasoning quality by up to 39%.</p>
+                        <pre>Add to any prompt:
+"Think through this step-by-step:
+1. First, analyze...
+2. Then, consider...
+3. Finally, recommend..."
+
+Or use thinking tags for
+internal reasoning.</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>4. Role-Based Positioning</h4>
+                        <p>Assigning Claude a specific expert role dramatically improves output quality. Be specific about the expertise level.</p>
+                        <pre>WEAK: "Help me with marketing"
+STRONG: "You are a CMO who has
+scaled 3 companies from $0 to
+$10M ARR. You think in funnels,
+not tactics."</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>5. Mega-Prompt Architecture</h4>
+                        <p>Single comprehensive prompts that orchestrate multiple domains simultaneously. One prompt = full project.</p>
+                        <pre>Key elements:
+1. Multi-role assignment
+2. Phased execution
+3. Human review gates
+4. Structured deliverables
+5. Quality checks built in</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>6. Few-Shot Examples</h4>
+                        <p>Provide 2-3 examples of desired output. Dramatically steers format, tone, and quality.</p>
+                        <pre>Include in your prompt:
+"Here's an example of what
+good output looks like:
+[EXAMPLE 1]
+[EXAMPLE 2]
+
+Now do the same for my case."</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>7. Iterative Refinement</h4>
+                        <p>Build context progressively across 4 rounds: Broad > Constrained > Stress-tested > Actionable.</p>
+                        <pre>Round 1: Explore broadly
+Round 2: Add constraints
+Round 3: Stress test
+Round 4: Make actionable
+
+Never start over - build on
+each previous round.</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>8. Multi-Persona Validation</h4>
+                        <p>Force Claude to adopt multiple perspectives. Catches blind spots and produces more balanced analysis.</p>
+                        <pre>Create 3+ distinct personas:
+- Different demographics
+- Different pain points
+- Different expertise levels
+- Different objections
+
+Each evaluates independently.</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>9. Pre-Mortem Technique</h4>
+                        <p>Ask "It's 1 year later and this failed. What went wrong?" Identifies risks you'd otherwise miss.</p>
+                        <pre>Add to any strategic prompt:
+"Before finalizing, conduct a
+pre-mortem: Assume this plan
+failed spectacularly. List the
+top 5 reasons it failed and
+how to prevent each."</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>10. Claude Skills (Reusable)</h4>
+                        <p>Build instruction sets once, use forever. Like hiring a specialist who never forgets your guidelines.</p>
+                        <pre>1. Define the role
+2. Set expertise & guidelines
+3. Specify quality standards
+4. Create workflow steps
+5. Save as Claude Project
+6. Reference in any chat</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>11. Output Format Control</h4>
+                        <p>Specify exactly how you want results. Prevents Claude from defaulting to generic formats.</p>
+                        <pre>Be specific:
+"Present as a 1-page exec brief"
+"Format as a decision matrix"
+"Write as email-ready copy"
+"Structure as investor memo"
+"Output as bullet action items
+with owners and deadlines"</pre>
+                    </div>
+
+                    <div class="framework-card">
+                        <h4>12. Constraint Engineering</h4>
+                        <p>The right constraints improve quality. Too few = generic output. Too many = stilted output.</p>
+                        <pre>Good constraints:
+- Word/length limits
+- "Be specific, not generic"
+- "Include data, not opinions"
+- "Flag uncertainty clearly"
+- "Challenge assumptions"
+- "No fluff or filler"</pre>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) dashboard.closeModal();
+});
+
+// Close modal on Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') dashboard.closeModal();
+});
+
+const dashboard = new Dashboard();
+</script>
+</body>
+</html>
