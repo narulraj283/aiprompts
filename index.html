@@ -37,7 +37,10 @@
             --av-freelancer: #A78BFA;
             --av-legal: #94A3B8;
             --av-hr: #F472B6;
-        }
+        
+  --av-partners: #FF6B35;
+  --av-virtualevents: #7C3AED;
+}
 
         body {
             background-color: var(--bg-primary);
@@ -9520,7 +9523,1119 @@ Email 5: Day 10 - Final offer
 - Monitoring: Poor monitoring
 - Testing: Insufficient testing
 </microservices_architecture_design>`, source: "https://twitter.com/alexxubyte", claudeOptimized: true, coworkReady: true}
-        ];
+        ,
+
+  // Partner Collaboration Prompts (156-165)
+  {id: 156, title: "Strategic Partnership Outreach", avatar: "partners", expert: "@shreyas", effectiveness: 9, description: "Craft personalized outreach to potential partners", tags: ["partnership", "outreach", "collaboration", "biz-dev"], useCase: "Research and contact ideal strategic partners for business growth", promptText: `You are a strategic partnership specialist helping identify and reach out to potential partners.
+
+Business Context:
+Business/Product: [INSERT YOUR BUSINESS DETAILS]
+Target Partner Profile: [DESCRIBE IDEAL PARTNERS - industry, size, audience overlap]
+Current Reach: [DESCRIBE YOUR CURRENT REACH]
+Mutual Value: [WHAT VALUE DO YOU BRING TO PARTNERS?]
+
+Task:
+1. Identify 5-10 specific partner prospects aligned with the target profile
+2. For each prospect, create personalized outreach email with:
+   - Specific, authentic compliment about their work
+   - Clear mutual benefits in concrete terms
+   - 2-3 collaboration ideas
+   - Clear next step (call, meeting, pilot)
+   - Professional but personal tone
+3. Provide 3 subject line variations to maximize open rate
+
+Output: Name | Industry | Why Ideal | Email Draft | Subject Lines`, source: "Strategic Partnership Framework", claudeOptimized: true, coworkReady: true},
+  {id: 157, title: "Co-Marketing Campaign Brief", avatar: "partners", expert: "@neilpatel", effectiveness: 9, description: "Design joint marketing campaigns with partners for mutual growth", tags: ["co-marketing", "partnership", "campaign", "joint-venture"], useCase: "Plan collaborative campaigns that benefit both brands", promptText: `Design a comprehensive co-marketing campaign with strategic partner.
+
+Campaign Context:
+Your Brand: [BRAND NAME AND POSITIONING]
+Partner Brand: [PARTNER NAME AND POSITIONING]
+Target Audience: [SHARED AUDIENCE DESCRIPTION]
+Campaign Goal: [AWARENESS/LEADS/SALES/ENGAGEMENT]
+Budget: [TOTAL BUDGET]
+Timeline: [START AND END DATE]
+
+Required Elements:
+1. Campaign name and messaging framework
+2. Channel strategy (content, social, email, paid, events)
+3. Content calendar with specific deliverables
+4. Promotion schedule and tactics
+5. Measurement plan with KPIs
+6. Revenue/lead sharing model
+7. Timeline and milestones
+
+Output: Detailed brief with all components and success metrics`, source: "Co-Marketing Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 158, title: "Partner ROI Framework", avatar: "partners", expert: "@pmarca", effectiveness: 8, description: "Measure and optimize the value of strategic partnerships", tags: ["partnership-roi", "metrics", "evaluation", "performance"], useCase: "Track partnership performance and ensure mutual value", promptText: `Create comprehensive ROI framework to measure partnership value.
+
+Partnership Details:
+Partner Name: [PARTNER NAME]
+Partnership Type: [REFERRAL/CO-MARKETING/INTEGRATION/REVENUE-SHARE]
+Duration: [LENGTH OF PARTNERSHIP]
+Investment: [COSTS - TIME, MONEY, RESOURCES]
+
+Framework Must Capture:
+1. Financial metrics (revenue, cost, profit attribution)
+2. Growth metrics (customers acquired, market reach expansion)
+3. Brand metrics (awareness lift, credibility gains)
+4. Operational metrics (efficiency gains, learning)
+5. Strategic metrics (market position, competitive advantage)
+
+For Each Metric: measurement approach, baseline/targets, cadence, data sources, reporting dashboard
+
+Output: Framework table, attribution methodology, examples, dashboard template, optimization recommendations`, source: "Partnership Metrics Framework", claudeOptimized: true, coworkReady: true},
+  {id: 159, title: "Joint Webinar Planning", avatar: "partners", expert: "@tferriss", effectiveness: 9, description: "Plan and execute co-hosted webinars with partners from agenda to follow-up", tags: ["webinar", "partnership", "co-hosting", "events"], useCase: "Host high-impact co-branded webinars that drive value", promptText: `Plan co-hosted webinar that delivers value to both audiences.
+
+Webinar Brief:
+Topic: [WEBINAR TOPIC]
+Co-host Partner: [PARTNER NAME]
+Target Attendees: [AUDIENCE SIZE AND DESCRIPTION]
+Date and Duration: [DATE AND LENGTH]
+Objective: [LEADS/SALES/ENGAGEMENT/AWARENESS]
+
+Planning Checklist:
+1. Webinar Structure: Introduction, content segments, interactive elements, CTA
+2. Content and Messaging: Title, speaker points, slides, handouts
+3. Promotion Strategy: Email sequence, social posts, partner promotion, paid ads
+4. Execution Playbook: Registration page, day-of checklist, moderator script
+5. Follow-up Sequence: Thank you email, replay, lead scoring, nurture sequence
+
+Output: Complete webinar plan with all components ready to execute`, source: "Webinar Co-Marketing Framework", claudeOptimized: true, coworkReady: true},
+  {id: 160, title: "Affiliate Program Design", avatar: "partners", expert: "@naval", effectiveness: 9, description: "Build a scalable affiliate or referral partner program from scratch", tags: ["affiliate", "referral", "partner-program", "commission"], useCase: "Create a program that motivates partners to drive sales", promptText: `Design scalable affiliate or referral partner program.
+
+Program Context:
+Product/Service: [DESCRIBE WHAT YOU'RE SELLING]
+Ideal Affiliates: [WHO SHOULD PROMOTE YOU?]
+Current Count: [HOW MANY PARTNERS NOW?]
+Growth Target: [TARGET AFFILIATE COUNT]
+Budget: [TOTAL AFFILIATE BUDGET]
+
+Program Design Elements:
+1. Commission Structure: Tiers, payment frequency, minimum payouts, attribution window
+2. Affiliate Resources: Marketing materials, brand guidelines, product sheets, FAQ
+3. Recruitment Strategy: Prospect profiles, outreach, onboarding, training
+4. Management System: Tracking platform, payment system, reporting, fraud detection
+5. Performance Targets: Affiliate KPIs, tiers, bonuses, churn prevention
+
+Output: Commission structure, recruitment email, onboarding checklist, marketing assets, performance contract template`, source: "Affiliate Program Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 161, title: "Partnership Agreement Template", avatar: "partners", expert: "@cdixon", effectiveness: 8, description: "Draft clear partnership terms covering roles, revenue sharing, and expectations", tags: ["agreement", "terms", "legal", "partnership"], useCase: "Create clear legal documentation for partnerships", promptText: `Create clear partnership agreement template.
+
+Partnership Details:
+Partner 1: [YOUR COMPANY/NAME]
+Partner 2: [PARTNER COMPANY/NAME]
+Partnership Type: [CO-MARKETING/REVENUE-SHARE/INTEGRATION/JOINT-VENTURE]
+Start Date: [DATE]
+Term Length: [DURATION]
+
+Required Sections:
+1. Parties and Purpose: Entities, objective, success definition
+2. Roles and Responsibilities: Tasks, decision-making, escalation
+3. Financial Terms: Revenue/cost sharing, payment schedule, expense allocation
+4. Intellectual Property: Ownership, licenses, confidentiality, restrictions
+5. Term and Termination: Duration, renewal, exit, wind-down
+6. Governance: Communication, meetings, reviews, amendments
+7. Legal Protections: Liability, indemnification, insurance, dispute resolution
+
+Output: Complete partnership agreement template with all sections and sample language`, source: "Legal Partnership Framework", claudeOptimized: true, coworkReady: true},
+  {id: 162, title: "Co-Branded Content Strategy", avatar: "partners", expert: "@garyvee", effectiveness: 9, description: "Create content that leverages both brands for maximum reach and credibility", tags: ["co-branding", "content", "collaboration", "reach"], useCase: "Produce collaborative content that amplifies both brands", promptText: `Design co-branded content strategy with a partner.
+
+Brand Context:
+Brand 1: [YOUR BRAND - POSITIONING, AUDIENCE, VOICE]
+Brand 2: [PARTNER BRAND - POSITIONING, AUDIENCE, VOICE]
+Overlapping Audience: [SIZE AND CHARACTERISTICS]
+Content Goal: [AWARENESS/LEADS/ENGAGEMENT/SALES]
+Duration: [3-6 MONTHS OR ONGOING]
+
+Content Strategy Elements:
+1. Content Themes and Pillars: 3-4 themes both brands align on
+2. Content Formats: Blog, video, podcast, social, webinars, tools
+3. Editorial Calendar: Monthly breakdown, publishing schedule, authors
+4. Brand Integration: How both brands appear, credit, logos
+5. Distribution and Amplification: Owned, paid, partner channels
+6. Performance Measurement: Content KPIs, reach, engagement, ROI
+
+Output: Content calendar (3 months), content briefs, brand guidelines, promotion plan, analytics dashboard setup`, source: "Co-Branding Content Framework", claudeOptimized: true, coworkReady: true},
+  {id: 163, title: "Partner Enablement Kit", avatar: "partners", expert: "@lennyrachitsky", effectiveness: 9, description: "Build resources to help partners effectively sell or promote your product", tags: ["enablement", "sales-kit", "partner-tools", "training"], useCase: "Equip partners with tools and knowledge to succeed", promptText: `Create comprehensive partner enablement kit.
+
+Partner Context:
+Product: [WHAT ARE PARTNERS SELLING/PROMOTING?]
+Partner Types: [RESELLER/AFFILIATE/REFERRAL/INTEGRATION?]
+Current Knowledge: [HOW FAMILIAR ARE THEY?]
+Primary Use Cases: [TOP 3-5 USE CASES PARTNERS SHOULD KNOW]
+
+Enablement Components:
+1. Product Knowledge: Feature overview, use cases, benefits, positioning, stories, demo, pricing
+2. Sales Materials: One-pager, pitch deck, objection handling, ROI calculator, testimonials, case studies
+3. Marketing Assets: Email templates, social templates, banners, blog template, webinar template
+4. Training and Resources: Onboarding, training video, sales playbook, FAQ, glossary
+5. Support and Incentives: Support contact, lead sharing, commission, bonuses, co-marketing
+6. Tools and Systems: Tracking links, UTM parameters, resource folder, partner portal, CRM, analytics
+
+Output: Complete resource library, onboarding playbook, marketing assets, training plan, performance tracking`, source: "Partner Enablement Framework", claudeOptimized: true, coworkReady: true},
+  {id: 164, title: "Integration Partnership Playbook", avatar: "partners", expert: "@kelseyhightower", effectiveness: 9, description: "Plan technical and go-to-market integration partnerships", tags: ["integration", "api", "technical-partnership", "ecosystem"], useCase: "Build product integrations that create ecosystem value", promptText: `Design technical and go-to-market integration partnership.
+
+Integration Context:
+Your Product: [YOUR PRODUCT NAME AND FUNCTIONALITY]
+Partner Product: [PARTNER PRODUCT NAME AND FUNCTIONALITY]
+Integration Type: [API/WEBHOOK/NATIVE/EMBEDDED]
+User Benefit: [HOW DOES INTEGRATION HELP END-USERS?]
+Timeline: [TARGET LAUNCH DATE]
+
+Technical Planning:
+1. Integration Architecture: Data flow, API endpoints, authentication, rate limiting, error handling
+2. Development Requirements: MVP features, specifications, testing, documentation, maintenance
+3. Security and Compliance: Data protection, compliance requirements, security testing, incident response
+
+Go-to-Market:
+1. Joint Messaging: Positioning, value prop, benefits, target segments
+2. Launch Strategy: Beta program, soft launch, public launch date, launch activities
+3. Promotion Plan: Announcements, press, webinar, content, social, partner promotion
+4. Support and Success: Joint support, training, documentation, metrics, feedback
+
+Output: Technical spec, architecture diagram, GTM plan, launch checklist, support playbook, timeline`, source: "Technical Partnership Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 165, title: "Partner Event Collaboration", avatar: "partners", expert: "@thisisbrandon", effectiveness: 9, description: "Plan joint events including virtual summits, meetups, and workshops with partners", tags: ["events", "collaboration", "summit", "meetup"], useCase: "Execute collaborative events that strengthen partnerships", promptText: `Plan joint event with partners (summit, meetup, or workshop).
+
+Event Context:
+Event Type: [SUMMIT/MEETUP/WORKSHOP/CONFERENCE]
+Partners Involved: [PARTNER NAMES]
+Expected Attendance: [SIZE AND AUDIENCE TYPE]
+Event Date and Location: [DATE AND VENUE]
+Primary Objective: [NETWORKING/LEARNING/SALES/COMMUNITY]
+Budget: [TOTAL EVENT BUDGET]
+
+Event Planning Elements:
+1. Event Concept: Title, positioning, themes, tracks, sessions, speakers, timing
+2. Speaker Curation: Recruitment, topic selection, formats, guidelines, support
+3. Logistics and Operations: Venue, registration, ticketing, on-site, technology, staffing
+4. Promotion and Registration: Landing page, email sequence, social, partner promotion, paid ads, PR
+5. Attendee Experience: Agenda, networking, interactive elements, food, swag, live streaming
+6. Post-event Strategy: Follow-up sequence, content repurposing, survey, lead nurturing, ROI analysis
+
+Output: Operations plan, promotion timeline, speaker recruitment package, on-site guide, follow-up sequence, analytics dashboard`, source: "Event Partnership Playbook", claudeOptimized: true, coworkReady: true},
+  // Virtual Events Prompts (166-175)
+  {id: 166, title: "Virtual Event Strategy & Planning", avatar: "virtualevents", expert: "@tferriss", effectiveness: 9, description: "Plan end-to-end virtual events from concept to post-event follow-up", tags: ["virtual-event", "planning", "strategy", "logistics"], useCase: "Execute professional virtual events that drive results", promptText: `Design comprehensive virtual event strategy.
+
+Event Details:
+Event Name: [EVENT NAME]
+Event Type: [WEBINAR/SUMMIT/CONFERENCE/WORKSHOP]
+Target Audience: [DESCRIBE ATTENDEES]
+Attendance Goal: [NUMBER OF ATTENDEES]
+Primary Objective: [LEADS/ENGAGEMENT/SALES/LEARNING]
+Timeline: [PLANNING START TO EVENT DATE]
+Budget: [TOTAL BUDGET]
+
+Strategic Planning Elements:
+1. Event Concept: Positioning, value prop, themes, target profile, success metrics
+2. Content Strategy: Session topics, formats, speaker needs, interactive elements, agenda
+3. Technology Selection: Platform evaluation, feature requirements, integration, backup
+4. Promotion Strategy: Multi-channel plan, email sequences, social media, paid ads, partnerships
+5. Attendee Experience: Registration flow, pre-event comms, interface walkthrough, networking, engagement
+6. Measurement and Analytics: KPIs, tracking, dashboard, reporting cadence
+7. Post-event Plan: Follow-up, content repurposing, feedback, lead scoring, ROI analysis
+
+Output: Complete event plan, promotion calendar, speaker recruitment package, tech setup guide, follow-up playbook, analytics framework`, source: "Virtual Event Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 167, title: "Webinar Script & Run-of-Show", avatar: "virtualevents", expert: "@addyosmani", effectiveness: 9, description: "Write compelling webinar scripts with speaker notes and timing cues", tags: ["webinar", "script", "presentation", "run-of-show"], useCase: "Create engaging webinar content with professional delivery", promptText: `Create complete webinar script with timing and speaker notes.
+
+Webinar Info:
+Topic: [WEBINAR TOPIC]
+Duration: [45/60/90 MINUTES]
+Speaker(s): [SPEAKER NAMES AND BIOS]
+Learning Objectives: [3-4 KEY TAKEAWAYS]
+Target Audience: [DESCRIBE ATTENDEES]
+Tone: [PROFESSIONAL/CASUAL/EDUCATIONAL/SALES]
+
+Script Structure:
+Introduction (5-7 min): Host welcome, topic positioning, speaker intro, learning outcomes, housekeeping
+Content Segments (30-45 min): 4-6 segments with talking points, examples, stories, slide notes, pause points, retention techniques
+Interactive Elements: Polls and timing, Q&A approach, chat moderation, live demos
+Call-to-Action (5 min): Value recap, next steps, contact info, thank you
+
+Output: Full script with speaker notes, timing breakdown, slide outline, interactive elements plan, Q&A guide, backup notes`, source: "Webinar Excellence Guide", claudeOptimized: true, coworkReady: true},
+  {id: 168, title: "Event Promotion Sequence", avatar: "virtualevents", expert: "@neilpatel", effectiveness: 9, description: "Create multi-channel promotion plan to maximize registrations", tags: ["promotion", "registration", "marketing", "event-marketing"], useCase: "Drive maximum attendance through strategic promotion", promptText: `Design comprehensive event promotion sequence.
+
+Event Context:
+Event Name: [EVENT NAME]
+Event Date: [DATE AND TIME]
+Registration Goal: [TARGET NUMBER OF REGISTRATIONS]
+Current Reach: [EMAIL LIST SIZE, SOCIAL FOLLOWERS]
+Weeks Until Event: [TIME AVAILABLE FOR PROMOTION]
+Budget: [PROMOTION BUDGET IF PAID]
+
+Promotion Timeline:
+Week 1-2 (Announce): Email announcement, teaser social posts, landing page, press release
+Week 3-4 (Build Interest): Value prop emails, speaker spotlights, paid ads, blog post
+Week 5-6 (Urgency): Early bird closing notice, limited spots posts, retargeting, partner push
+Week 7 (Final Push): Last chance email, direct registration posts, increased paid spend, live countdown
+
+Promotion Channels:
+Email: 4-5 template variations with send schedule
+Social Media: 2 posts per platform with timing
+Paid Ads: Copy, creatives, targeting, budget allocation
+Partners: Co-promotion assets and timeline
+
+Conversion Optimization: Landing page elements, registration form, objection handling, FAQ
+
+Output: Promotion calendar, email templates, social content, ad specs, partner package, landing page brief`, source: "Event Marketing Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 169, title: "Virtual Workshop Facilitation Guide", avatar: "virtualevents", expert: "@shreyas", effectiveness: 9, description: "Design interactive virtual workshops that keep participants engaged", tags: ["workshop", "facilitation", "interactive", "engagement"], useCase: "Create engaging workshops with high participation", promptText: `Design interactive virtual workshop from scratch.
+
+Workshop Context:
+Topic: [WORKSHOP TOPIC]
+Duration: [2-4 HOURS]
+Participant Count: [NUMBER OF PARTICIPANTS]
+Skill Level: [BEGINNER/INTERMEDIATE/ADVANCED]
+Desired Outcomes: [WHAT SHOULD PARTICIPANTS LEARN?]
+Interaction Level: [HIGHLY INTERACTIVE/MODERATE/LECTURE]
+
+Workshop Design:
+1. Learning Objectives: 3-5 specific, measurable outcomes, skills gained, real-world applications
+2. Content Structure: Opening hook (15 min), teaching segments (3-4 modules), practice activities, group exercises, Q&A, closing
+3. Interactive Elements: Polls, quizzes, breakout rooms, chat discussions, collaborative whiteboard, peer feedback
+4. Facilitation Guide: Welcome, icebreaker, clear activity instructions, timing, transitions, handling questions, managing dynamics, backup activities
+5. Materials and Resources: Participant workbook, slide deck, resource handout, follow-up resources, certificate
+6. Engagement Tactics: Name usage, stories, examples, humor, frequent questions, participant recognition, energy management
+
+Output: Detailed agenda, facilitation guide with speaker notes, activity instructions, slide outline, participant workbook, resource guide, engagement checklist`, source: "Virtual Facilitation Excellence", claudeOptimized: true, coworkReady: true},
+  {id: 170, title: "Panel Discussion Preparation", avatar: "virtualevents", expert: "@pmarca", effectiveness: 8, description: "Prepare moderator questions, panelist briefs, and audience engagement strategies", tags: ["panel", "moderation", "discussion", "speakers"], useCase: "Host engaging panel discussions with great conversations", promptText: `Prepare comprehensive panel discussion.
+
+Panel Context:
+Topic: [PANEL TOPIC]
+Panelists: [NAMES AND TITLES - 3-5 PEOPLE]
+Moderator: [MODERATOR NAME]
+Duration: [45-60 MINUTES]
+Expected Audience: [SIZE AND DESCRIPTION]
+Goal: [LEARNING/ENTERTAINMENT/THOUGHT LEADERSHIP]
+
+Moderation Strategy:
+1. Moderator Brief: Panel topic, panelist backgrounds, key points, interview objectives, conversation flow, timing guide
+2. Question Development: Opening question (sets tone), core questions (5-7), follow-up probes, audience questions approach, closing question
+3. Panelist Preparation: Pre-panel call, questions they'll be asked, key talking points, how to distinguish, timing expectations, technical setup
+4. Audience Engagement: Live polling questions, Q&A submission process, chat moderation, interactive prompts, energy management
+5. Conversation Management: Balancing speaking time, handling personality types, deepening responses, managing time, creating memorable moments
+6. Technical Preparation: Screen sharing setup, video/audio tests, backup communication, chat management, recording procedures
+
+Output: Moderator guide, question list with probes, panelist briefing document, audience engagement plan, technical checklist, run-of-show timeline, follow-up strategy`, source: "Panel Moderation Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 171, title: "Event Follow-Up & Nurture Sequence", avatar: "virtualevents", expert: "@ajaypatel", effectiveness: 9, description: "Convert event attendees into leads and customers with strategic follow-up", tags: ["follow-up", "nurture", "conversion", "post-event"], useCase: "Maximize ROI by converting attendees into customers", promptText: `Create strategic post-event follow-up and nurture sequence.
+
+Event Context:
+Event Name: [EVENT NAME]
+Number of Attendees: [EXPECTED ATTENDANCE]
+Attendee Segments: [DESCRIBE DIFFERENT ATTENDEE TYPES]
+Conversion Goal: [WHAT'S THE DESIRED ACTION?]
+Sales Cycle: [SHORT/MEDIUM/LONG]
+Follow-up Timeline: [3/6/12 MONTHS]
+
+Follow-up Sequence:
+Immediate (Same Day/Next Day): Thank you email with replay, feedback survey, special offer, resource download
+Short-term (3-7 Days): Key takeaways email, speaker resources, content recommendations, case study, limited-time offer
+Medium-term (2-4 Weeks): Segmented follow-up, advanced content, one-on-one outreach for hot leads, product demo, testimonials
+Long-term (1-6 Months): Nurture sequence by interests, product updates, exclusive events, educational series, personalized recommendations
+
+Segmentation Strategy:
+Segment based on: Engagement level, industry/use case, company size/role, expressed interests, post-event behavior
+
+Content Framework:
+For each email: Hook/opening, relevant content, clear value prop, single CTA, optional social proof
+
+Conversion Tactics: Lead scoring, sales team handoff, personalization, objection handling, urgency/scarcity
+
+Output: Follow-up email sequence (8-10 emails), segmentation strategy, lead scoring model, nurture calendar, CRM setup guide, conversion tracking, sales handoff process`, source: "Post-Event Conversion Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 172, title: "Virtual Summit Blueprint", avatar: "virtualevents", expert: "@garyvee", effectiveness: 9, description: "Organize a multi-day virtual summit with multiple speakers and tracks", tags: ["summit", "multi-day", "speakers", "tracks"], useCase: "Plan and execute a large-scale multi-day virtual summit", promptText: `Design comprehensive multi-day virtual summit.
+
+Summit Context:
+Summit Name: [SUMMIT NAME]
+Duration: [2-4 DAYS]
+Expected Attendance: [NUMBER OF ATTENDEES]
+Number of Speakers: [TOTAL SPEAKERS]
+Number of Tracks: [PARALLEL SESSIONS?]
+Primary Objective: [AWARENESS/LEARNING/LEADS/COMMUNITY]
+Budget: [TOTAL BUDGET]
+
+Summit Structure:
+1. Overall Architecture: Day-by-day theme breakdown, track structure, session slots, opening/closing ceremonies, networking, sponsor area
+2. Content Programming: Speaker recruitment, session formats, topic selection, content requirements, diversity considerations, speaker support
+3. Platform and Technology: Virtual event platform selection, feature requirements, attendee experience design, speaker setup, contingency
+4. Attendee Experience: Registration, onboarding, navigation, personalization, breakout rooms, live chat, Q&A moderation
+5. Sponsorship and Monetization: Sponsorship packages, sponsor benefits, integration, exhibition area, lead capture
+6. Marketing and Promotion: Pre-summit campaign, early bird tickets, speaker promotion, influencer outreach, media coverage, FOMO tactics
+7. Operations and Logistics: Team structure, speaker timeline, attendee support, live operations, post-event content
+
+Output: Summit master plan, speaker recruitment package, day-by-day agenda, tech setup guide, marketing calendar, operations runbook, post-summit content strategy`, source: "Virtual Summit Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 173, title: "Attendee Engagement Toolkit", avatar: "virtualevents", expert: "@thisisbrandon", effectiveness: 9, description: "Design polls, Q&A, breakout rooms, and interactive elements for virtual events", tags: ["engagement", "polls", "qa", "breakout-rooms"], useCase: "Keep virtual event attendees engaged throughout", promptText: `Design comprehensive engagement toolkit for virtual events.
+
+Event Context:
+Event Type: [WEBINAR/WORKSHOP/SUMMIT/CONFERENCE]
+Event Duration: [45-240 MINUTES]
+Expected Participants: [NUMBER OF PEOPLE]
+Audience Type: [DESCRIBE PARTICIPANTS]
+Platform: [ZOOM/HOPIN/WEBEX/OTHER]
+Primary Goal: [LEARNING/NETWORKING/SALES]
+
+Engagement Elements:
+1. Polling Strategy: Pre-event poll, sentiment polls, knowledge check polls, interest polls, post-event survey - questions, timing, usage for each
+2. Q&A Management: Question collection, moderation approach, selection criteria, incorporation into flow, unanswered handling, post-event document
+3. Chat and Social: Chat guidelines, moderator roles, suggested prompts, conversation starters, emojis, social hashtag strategy
+4. Breakout Room Activities: Group discussion topics, facilitation guidelines, time allocations, report-back structure, technical setup
+5. Live Interaction: Whiteboard activities, collaborative documents, real-time games, spotlight moments, giveaways
+6. Networking Opportunities: Virtual speed networking, matched sessions, directory browsing, forums, social channels
+7. Engagement Tracking: Metrics to measure, how to track participation, engagement scoring, post-event analysis, insights
+
+Output: Engagement strategy, poll question library, chat moderation guidelines, breakout activity cards, interactive element instructions, engagement checklist, tracking framework`, source: "Virtual Event Engagement Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 174, title: "Event Content Repurposing", avatar: "virtualevents", expert: "@naval", effectiveness: 9, description: "Transform virtual event content into blog posts, social clips, and courses", tags: ["repurposing", "content", "clips", "courses"], useCase: "Maximize ROI by repurposing event content", promptText: `Plan comprehensive content repurposing strategy.
+
+Event Details:
+Event Name: [EVENT NAME]
+Content Type: [WEBINAR/KEYNOTE/WORKSHOP/INTERVIEW]
+Duration: [LENGTH OF CONTENT]
+Main Topics: [KEY TOPICS FROM EVENT]
+Target Audience: [WHO IS THIS FOR?]
+Repurposing Timeline: [WHEN TO PUBLISH EACH PIECE]
+
+Repurposing Plan:
+1. Blog Posts and Long-form: Main recap, key takeaways article, how-to guides, case studies, expert interviews - outline, angle, SEO keywords for each
+2. Video Content: Full replay, highlight reel (3-5 min), key clips (15-30 sec), speaker spotlight, interview excerpts, animated explainers, editing notes
+3. Social Media Content: LinkedIn posts (3-5), Twitter threads, Instagram carousel, TikTok shorts, quote graphics, infographics, platform call-outs
+4. Podcast Content: Podcast episode, podcast clips, guest appearances, audio highlights
+5. Lead Magnet/Downloadables: Attendee workbook, checklist, template, data, research findings, swipe files, resource guide
+6. Email Content: Welcome sequence for non-attendees, educational series, case study emails, promotional emails
+7. Learning Content: Online course modules, masterclass, training program, certification, study guides
+8. Infographics and Visuals: Key statistics, process diagrams, comparison charts, timeline visuals, slide repurposing
+
+Content Calendar: Week 1 (blog, clips, social), Week 2 (secondary posts, emails), Week 3 (course, social), Ongoing (evergreen promotion)
+
+Output: Repurposing strategy, content outlines, social calendar, blog outlines, video editing guide, email templates, course outline, distribution plan`, source: "Content Repurposing Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 175, title: "Hybrid Event Planning", avatar: "virtualevents", expert: "@eriktorenberg", effectiveness: 8, description: "Design events that work seamlessly for both in-person and virtual attendees", tags: ["hybrid", "in-person", "virtual", "technology"], useCase: "Execute events that engage both in-person and virtual audiences", promptText: `Design comprehensive hybrid event strategy.
+
+Event Context:
+Event Name: [EVENT NAME]
+Event Date and Location: [DATE AND VENUE]
+Expected In-Person: [NUMBER]
+Expected Virtual: [NUMBER]
+Event Duration: [HALF-DAY/FULL-DAY/MULTI-DAY]
+Primary Objective: [NETWORKING/LEARNING/PRODUCT LAUNCH/COMMUNITY]
+Budget: [TOTAL BUDGET]
+
+Hybrid Strategy:
+1. Venue and In-Person Logistics: Layout, capacity, networking areas, food/beverage, registration, AV infrastructure, Wi-Fi
+2. Technology Infrastructure: Video streaming platform, in-venue cameras/audio, virtual stage, interactive features, breakout rooms, network capacity, technical support
+3. Content Delivery: Main stage visibility, speaker technical setup, slides/visuals, camera angles, production switching
+4. Engagement for Virtual: Ability to ask questions, networking opportunities, breakout participation, virtual backgrounds, chat, feeling included
+5. Engagement for In-Person: Networking with attendees, venue experience, speaker interaction, hands-on activities, not distracted by screens
+6. Hybrid Networking: Virtual lounge, matched networking, group discussions, directory access, chat
+7. Production and AV: Cameras, microphones, screen sharing, backup internet/power, technical director, run-of-show
+8. Staffing and Operations: In-venue staff roles, virtual support, technical team, moderators, chat team, communication
+9. Analytics and Measurement: In-person metrics, virtual metrics, combined ROI, experience comparison
+
+Output: Hybrid strategy document, technology architecture, venue layout, production guide, staffing plan, run-of-show, contingency plans, analytics framework`, source: "Hybrid Event Mastery", claudeOptimized: true, coworkReady: true},
+  // Marketing Sub-categories - LinkedIn (176-179)
+  {id: 176, title: "LinkedIn Thought Leadership Series", avatar: "marketer", expert: "@shreyas", effectiveness: 9, description: "Plan a 30-day LinkedIn content series that builds authority and following", tags: ["linkedin", "thought-leadership", "content-series", "personal-brand"], useCase: "Build authority and grow LinkedIn following with consistent content", promptText: `Plan 30-day LinkedIn thought leadership content series.
+
+Your Context:
+Industry/Expertise: [YOUR INDUSTRY AND EXPERTISE AREA]
+Current Followers: [YOUR CURRENT LINKEDIN FOLLOWER COUNT]
+Goal: [GROW FOLLOWERS/BUILD AUTHORITY/GENERATE LEADS]
+Target Audience: [WHO DO YOU WANT TO ATTRACT?]
+Time Available: [HOW MUCH TIME TO CREATE CONTENT?]
+
+Content Series Plan:
+1. Theme Selection: 5 core themes (industry trends, lessons, contrarian takes), hook angles, target stories, data references
+2. Content Calendar (30 days): Day-by-day topics, content type for each post, publishing schedule, hook preview
+3. Post Structure: Opening hook (first 2 lines critical), main content, lesson/takeaway, CTA, hashtag strategy
+4. Content Examples: Sample post for each theme, carousel outlines, video scripts, case study approach
+5. Engagement Strategy: Comment responses, engaging other creators, timing optimization, community building
+6. Content Repurposing: Twitter variations, newsletter snippets, email content
+
+Output: 30-day content calendar, 5 sample posts, carousel templates, hook variations (20+), video ideas, response templates, hashtag research, analytics sheet`, source: "LinkedIn Authority Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 177, title: "LinkedIn Carousel Post Creator", avatar: "marketer", expert: "@addyosmani", effectiveness: 9, description: "Design high-engagement carousel posts with hook, content, and CTA", tags: ["linkedin", "carousel", "visual-content", "engagement"], useCase: "Create viral LinkedIn carousel posts that drive engagement", promptText: `Create high-engagement LinkedIn carousel posts.
+
+Carousel Context:
+Topic: [WHAT IS THIS CAROUSEL ABOUT?]
+Goal: [ENGAGEMENT/SHARES/SAVES/FOLLOWS/LEADS]
+Target Audience: [WHO SHOULD ENGAGE WITH THIS?]
+Content Type: [EDUCATION/TIPS/FRAMEWORK/LIST/STORY]
+
+Carousel Structure:
+Slide 1 (Hook - MOST CRITICAL): Single provocative statement, stops scroll, creates curiosity, 5-10 words max, high contrast
+Slides 2-8 (Main Content): One idea per slide, visual + text, progressive learning, each builds previous, include data/stories/steps
+Final Slide (CTA): Summary or key takeaway, clear call-to-action, link if available, desired action
+
+Content Examples:
+Create 3 full carousel ideas with: Slide copy, design direction, key visual elements, hook analysis
+
+Optimization Tactics: Timing, caption strategy, comment seeding, hashtag approach, testing and iteration
+
+Output: 5 complete carousel outlines (copy + design), hook variations, slide specs, caption templates, CTA options, performance prediction, A/B testing framework`, source: "LinkedIn Content Excellence", claudeOptimized: true, coworkReady: true},
+  {id: 178, title: "LinkedIn Profile Optimization", avatar: "marketer", expert: "@tferriss", effectiveness: 9, description: "Rewrite LinkedIn profiles to attract opportunities and build credibility", tags: ["linkedin", "profile", "personal-brand", "optimization"], useCase: "Optimize LinkedIn profile for opportunities and visibility", promptText: `Optimize LinkedIn profile for maximum impact.
+
+Profile Context:
+Current Role/Title: [YOUR CURRENT POSITION]
+Career Goals: [WHAT OPPORTUNITIES DO YOU WANT?]
+Target Audience: [WHO SHOULD FIND YOU ON LINKEDIN?]
+Current Strengths: [YOUR TOP SKILLS AND ACHIEVEMENTS]
+
+Profile Sections:
+1. Profile Photo and Banner: Photo recommendations, banner design and messaging, consistency with personal brand
+2. Headline Optimization: Structure for discoverability, keywords to include, 220-character limit usage, example variations
+3. About/Bio Section: Hook opening, value proposition, background story, skills highlight, CTA, length and formatting
+4. Experience Section: Role description optimization, achievement highlighting with metrics, keyword integration, format, LinkedIn media usage
+5. Skills and Endorsements: Key skills to list (prioritize top 5), keywords for searchability, endorsement strategy, recommendations
+6. Recommendations: How to request recommendations, what to highlight, templates
+7. Open to Opportunities: Job search settings, freelance/contract options, speaking, consulting
+8. Engagement and Content: Recent posts, content strategy, news articles, activity recommendations
+
+Output: Optimized headline (3 variations), rewritten About section, updated Experience section, skills list with keywords, banner brief, photo recommendations, recommendation template, 30-day engagement plan`, source: "LinkedIn Profile Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 179, title: "LinkedIn Outreach Templates", avatar: "marketer", expert: "@naval", effectiveness: 8, description: "Craft personalized connection requests and DM sequences that get responses", tags: ["linkedin", "outreach", "dm", "networking"], useCase: "Build relationships through effective LinkedIn outreach", promptText: `Create personalized LinkedIn outreach sequences.
+
+Outreach Goal:
+Objective: [NETWORKING/SALES/PARTNERSHIP/LEARNING/OPPORTUNITY]
+Target Profile: [DESCRIBE IDEAL CONNECTIONS]
+Current Network: [YOUR INDUSTRY AND POSITION]
+Success Metric: [RESPONSE RATE / MEETINGS BOOKED]
+Volume: [HOW MANY OUTREACHES?]
+
+Connection Request Template:
+Element 1 (Opening Hook): Personal reference, mutual connection, shared interest, specific observation - genuine and brief
+Element 2 (Value Prop): Why connect with you?, what you offer, shared interests, concrete benefit
+Element 3 (Soft CTA): Suggest conversation topic, offer help, ask for advice, propose next step
+
+DM Sequence:
+Message 1 (After Accept): Gratitude, personalization, value offering, soft CTA (coffee chat, call)
+Message 2 (5 days, no response): Different angle, shared interest, question to prompt response, lower pressure CTA
+Message 3 (Still no response): Final attempt with strong value, specific offer, resource, clear CTA with timeline, graceful exit
+
+Variations:
+Create 5 templates for different scenarios: Cold outreach, sales-focused, networking, partnership inquiry, advisory request
+
+Output: 5 connection request templates, 3-message DM sequence examples, personalization guidelines, response handling strategies, follow-up decision tree, timing/frequency guide, tracking approach`, source: "LinkedIn Outreach Mastery", claudeOptimized: true, coworkReady: true},
+
+  // Marketing Sub-categories - Facebook Groups (180-182)
+  {id: 180, title: "Facebook Group Growth Strategy", avatar: "marketer", expert: "@garyvee", effectiveness: 9, description: "Build and grow an engaged Facebook community from zero to thriving", tags: ["facebook-groups", "community", "growth", "engagement"], useCase: "Launch and scale a Facebook community", promptText: `Design Facebook Group growth strategy.
+
+Group Context:
+Group Name: [GROUP NAME AND NICHE]
+Target Member: [DESCRIBE YOUR IDEAL MEMBER]
+Purpose: [EDUCATION/NETWORKING/SALES/SUPPORT/HOBBY]
+Launch Status: [NEW/EXISTING WITH FEW MEMBERS]
+Growth Target: [TARGET NUMBER OF MEMBERS]
+Timeline: [HOW FAST TO GROW?]
+
+Growth Strategy:
+1. Pre-launch Setup: Description and rules, welcome post, cover photo, category, moderators, first 10 posts
+2. Launch and Seeding: Founding members (50-100), personal outreach, launch announcement, seed conversations, early engagement
+3. Growth Channels: In-group referrals, email list, social media, website, partnerships, paid Facebook ads, ambassadors
+4. Content Strategy: Pinned posts (rules, resources), daily engagement starters, weekly themes, Q&A, guest experts, success stories
+5. Engagement and Retention: Welcome sequence, moderation guidelines, encourage participation, recognize active members, handle conflicts, sub-conversations
+6. Community Culture: Brand voice, shared values, member roles (ambassadors), rewards for participation, exclusivity
+7. Metrics and Optimization: Growth rate tracking, engagement metrics, retention, content performance, monthly optimization
+
+Phase Targets: Month 1 (100-200), Month 3 (500-1000), Month 6 (2000-5000), Month 12 (10000+)
+
+Output: Setup guide, 30-day content calendar, growth channel breakdown, moderation guidelines, member journey map, weekly engagement framework, analytics dashboard, growth projections`, source: "Facebook Community Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 181, title: "Community Engagement Post Templates", avatar: "marketer", expert: "@thisisbrandon", effectiveness: 9, description: "Create conversation-starting posts that boost group engagement metrics", tags: ["facebook-groups", "engagement", "posts", "community-management"], useCase: "Create posts that spark conversation and build community", promptText: `Create engagement-focused Facebook Group post templates.
+
+Group Context:
+Group Niche: [DESCRIBE YOUR GROUP NICHE]
+Member Count: [CURRENT MEMBER COUNT]
+Goal: [ENGAGEMENT/RETENTION/VALUE/LOYALTY]
+Post Frequency: [HOW OFTEN DO YOU POST?]
+
+Post Types:
+1. Question Posts: Open-ended questions, specific industry questions, controversial (but safe) questions, multiple choice, fill-in-the-blank
+2. Polls and Surveys: Quick preference polls, opinion gauges, experience surveys, feedback requests
+3. Prompts and Challenges: 30-day challenges, weekly challenges, story prompts, case study requests, before/after submissions
+4. Announcement Posts: New resources, guest experts, group milestones, special events, launches
+5. Educational Posts: Quick tips, how-to guides, myth-busting, industry trends, resource roundups
+6. Community Spotlights: Member success stories, Q&A with members, feature introductions, highlight member content
+7. Engagement Hooks: Disagree/agree statements, hot takes, would you rather, unpopular opinions
+
+Template Library:
+For each type: Template with fill-in-the-blank, 3-5 copy variations, best posting time, expected engagement, follow-up strategy, comment response guide
+
+Engagement Tactics: Liking early comments, pinning conversations, follow-up questions, discussion threads, recognizing valuable comments, moderator participation
+
+Output: 25 post templates with variations, engagement response guide, comment moderation guide, scheduling calendar, analytics framework, member spotlighting process, challenge ideas`, source: "Community Engagement Playbook", claudeOptimized: true, coworkReady: true},
+  {id: 182, title: "Group Moderation Playbook", avatar: "marketer", expert: "@lennyrachitsky", effectiveness: 8, description: "Set up rules, moderation workflows, and member management systems", tags: ["facebook-groups", "moderation", "rules", "management"], useCase: "Manage group culture and maintain healthy community", promptText: `Create comprehensive group moderation system.
+
+Group Context:
+Group Size: [CURRENT AND PROJECTED MEMBER COUNT]
+Group Niche: [DESCRIBE COMMUNITY TYPE]
+Growth Stage: [EARLY/GROWTH/MATURE]
+Moderation Team: [HOW MANY MODERATORS?]
+
+Moderation Framework:
+1. Group Rules and Guidelines: Community standards, prohibited content, spam policy, respectful communication, consequences
+2. Posting Guidelines: Allowed content types, content format, links policy, promotional content, off-topic policy
+3. Moderation Structure: Moderator roles and responsibilities, decision-making authority, escalation, training, communication
+4. Member Onboarding: Welcome message, rules orientation, introduction prompts, available resources, first post expectations
+5. Problem Identification: Spam detection, conflict ID, policy violations, troll behavior, toxicity signals
+6. Response Protocols: Warning system, private message approach, content removal, suspension steps, appeal process
+7. Conflict Resolution: De-escalation techniques, mediating disagreements, setting boundaries, member removal, sensitive topics
+8. Regular Maintenance: Daily moderation checklist, weekly review, monthly metrics, rule refinement, team sync
+9. Documentation: Decision log, conflict records, rule updates, member feedback, lessons learned
+
+Tools and Systems: Moderation tools, CRM, member database, communication templates, decision trees, alert systems
+
+Output: Community guidelines document, posting guidelines, moderation playbook, decision trees, moderator training guide, welcome sequence, warning/suspension templates, monthly checklist, analytics dashboard`, source: "Community Moderation Mastery", claudeOptimized: true, coworkReady: true},
+
+  // Marketing Sub-categories - TikTok (183-185)
+  {id: 183, title: "TikTok Content Strategy", avatar: "marketer", expert: "@garyvee", effectiveness: 9, description: "Plan viral TikTok content with hooks, trends, and posting schedule", tags: ["tiktok", "short-form-video", "viral", "content-strategy"], useCase: "Create viral TikTok content that drives followers and reach", promptText: `Design TikTok content strategy for viral growth.
+
+Channel Context:
+Niche/Industry: [YOUR NICHE OR INDUSTRY]
+Goal: [FOLLOWERS/ENGAGEMENT/BRAND AWARENESS/SALES]
+Target Audience: [AGE RANGE, INTERESTS, BEHAVIORS]
+Posting Capacity: [HOW MANY VIDEOS PER WEEK?]
+Budget: [ANY PAID PROMOTION BUDGET?]
+
+Content Strategy:
+1. Niche and Positioning: Your unique angle, what sets you apart, target audience, content pillars (3-5 themes)
+2. Trend Analysis: Current trends in your niche, trending sounds, formats that work, seasonal content
+3. Content Pillars and Ideas: 3-5 content themes, 50+ video ideas per theme, educational, entertaining, relatable
+4. Hook Strategy: First 3 seconds are critical, hook examples for each pillar, pattern interrupts, curiosity gaps
+5. Posting Schedule: Optimal posting times for your audience, posting frequency, consistency strategy
+6. Engagement Strategy: Responding to comments, creating duets/stitches, trending participation, community building
+7. Analytics Tracking: Key metrics (views, engagement rate, follower growth), tools to track, weekly optimization
+8. Monetization Path: TikTok Creator Fund, brand partnerships, affiliate marketing, digital products
+
+Content Calendar:
+30-day calendar with: Daily topic, hook type, trending sound (if applicable), call-to-action, expected performance
+
+Output: 30-day content calendar, 50+ video ideas, hook examples library, sound/music recommendations, analytics dashboard template, growth targets by milestone`, source: "TikTok Viral Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 184, title: "TikTok Script & Hook Writing", avatar: "marketer", expert: "@thisisbrandon", effectiveness: 9, description: "Write scroll-stopping hooks and scripts for short-form video content", tags: ["tiktok", "hooks", "scripts", "copywriting"], useCase: "Write compelling TikTok video scripts that stop the scroll", promptText: `Create TikTok scripts and hook-writing system.
+
+Video Context:
+Topic/Niche: [YOUR CONTENT TOPIC]
+Target Viewer: [WHO IS WATCHING?]
+Video Length: [15/30/60 SECONDS]
+Goal: [WATCH TIME/ENGAGEMENT/FOLLOW]
+Content Type: [EDUCATIONAL/ENTERTAINING/INSPIRATIONAL/FUNNY]
+
+Hook Writing Formula:
+First 3 Seconds (THE HOOK - Make Them Stop Scrolling):
+1. Hook type: Bold statement, question, surprising fact, visual pattern interrupt, trend reference
+2. Hook examples: 5-10 strong hooks for your content type
+3. Hook variations: Different angles on the same topic
+
+Video Script Structure:
+Hook (3 sec): Attention-grabbing opening
+Body (12-27 sec): Main content, teaching point, story, or entertainment value
+Transition (1-3 sec): Pattern break, text overlay, music change, or visual shift
+CTA (1-3 sec): Call to action (follow, save, comment, share)
+
+Scripting Examples:
+Create 10 full video scripts with:
+- Hook line
+- Body copy
+- Transition cue
+- On-screen text suggestions
+- Trending sound pairing
+- Performance prediction
+
+Advanced Techniques: Pattern interrupts, retention tactics, emotional triggers, community references, trending integration
+
+Output: Hook template library (100+ hooks), 10 full video scripts, shooting checklist, trending sound pairings, text overlay guide, CTA variations, A/B testing plan`, source: "TikTok Copywriting Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 185, title: "TikTok Trend Adaptation Framework", avatar: "marketer", expert: "@addyosmani", effectiveness: 8, description: "Adapt trending sounds and formats to your brand while staying authentic", tags: ["tiktok", "trends", "adaptation", "brand-voice"], useCase: "Leverage TikTok trends authentically for your brand", promptText: `Create TikTok trend adaptation framework.
+
+Brand Context:
+Brand/Niche: [YOUR BRAND OR CONTENT NICHE]
+Brand Voice: [HOW DO YOU SOUND? - Funny, Educational, Inspirational, Irreverent]
+Target Audience: [WHO FOLLOWS YOU?]
+Values: [WHAT DO YOU STAND FOR?]
+
+Trend Analysis Framework:
+1. Trend Identification: Where to find trends (FYP, For You, Discover page), trend lifecycle, saturation timing
+2. Trend Evaluation: Does this fit my brand?, does my audience like it?, can I do it authentically?, is it overused?
+3. Adaptation Strategy: How to make it unique to my brand, twist it, personalize it, add my angle
+4. Content Creation: Step-by-step process, creative direction, script variations, multiple takes
+5. Timing: When to post (peak times), when trends are hot vs. past their peak
+6. Authenticity Checklist: Does this feel like me?, would I do this naturally?, does my audience expect this?
+
+Trend Adaptation Examples:
+5 trending sounds or formats with:
+- Original trend description
+- Your brand adaptation
+- Script and shooting notes
+- Authenticity assessment
+- Expected performance
+
+Rejection Criteria: Trends that don't fit your brand, low-engagement trends, trends past their peak, content that feels forced
+
+Output: Trend identification process, evaluation checklist, adaptation strategy, 5 trend adaptations with scripts, authenticity framework, timing guide, weekly trend analysis template`, source: "TikTok Trend Mastery", claudeOptimized: true, coworkReady: true},
+
+  // Marketing Sub-categories - Google Ads (186-188)
+  {id: 186, title: "Google Ads Campaign Architecture", avatar: "marketer", expert: "@neilpatel", effectiveness: 9, description: "Structure Google Ads campaigns for maximum quality score and ROI", tags: ["google-ads", "ppc", "campaign-structure", "quality-score"], useCase: "Build optimized Google Ads campaigns from scratch", promptText: `Design Google Ads campaign architecture for maximum ROI.
+
+Business Context:
+Business/Product: [WHAT ARE YOU SELLING?]
+Monthly Budget: [TOTAL PPC BUDGET]
+Target Geography: [WHERE ARE YOUR CUSTOMERS?]
+Primary Goal: [LEADS/SALES/TRAFFIC/BRAND AWARENESS]
+Average Customer Value: [LTV OR AVERAGE ORDER VALUE]
+
+Campaign Architecture:
+1. Campaign Strategy: Customer segments, geography targeting, device strategy, scheduling, bidding strategy
+2. Account Structure: Campaigns (by product/service/geography), Ad groups (by keyword theme), keywords (exact, phrase, broad match)
+3. Keyword Research: High-intent keywords, long-tail keywords, competitor keywords, negative keywords
+4. Quality Score Optimization: Ad relevance, landing page experience, CTR targets, keyword-to-ad-group alignment
+5. Ad Copy Structure: Multiple ad variations (3-5 per ad group), headlines, descriptions, sitelinks, call-outs, structured snippets
+6. Landing Page Strategy: Dedicated landing pages per ad group, optimization elements, conversion paths
+7. Bidding Strategy: Manual vs. automated, target CPA, ROAS targets, bid adjustments (device, location, time)
+8. Performance Monitoring: KPIs (CTR, CPC, conversion rate, ROAS), weekly optimization, seasonal adjustments
+9. Conversion Tracking: Set up conversion tracking, goals, value tracking, cross-device tracking
+
+Campaign Checklist:
+- Keyword alignment with ads
+- Ad copy variations (at least 3)
+- Landing page relevance
+- Conversion tracking enabled
+- Negative keyword list
+- Bid adjustments
+- Daily budget allocation
+
+Output: Campaign architecture diagram, keyword research spreadsheet, ad copy variations template, landing page checklist, conversion tracking setup guide, bidding strategy document, performance monitoring dashboard`, source: "Google Ads Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 187, title: "Google Ads Copy Generator", avatar: "marketer", expert: "@sujanpatel", effectiveness: 9, description: "Write compelling ad copy variations with strong CTAs for search campaigns", tags: ["google-ads", "ad-copy", "cta", "search-ads"], useCase: "Create high-converting Google Ads copy", promptText: `Generate high-converting Google Ads copy variations.
+
+Keyword Context:
+Primary Keyword: [THE MAIN KEYWORD THIS AD TARGETS]
+Ad Group Theme: [AD GROUP TOPIC OR PRODUCT]
+Landing Page: [WHERE DOES THIS AD SEND?]
+Value Proposition: [KEY BENEFIT OR OFFER]
+Target Audience: [WHO IS CLICKING THIS AD?]
+
+Ad Copy Strategy:
+1. Headline Strategy: Include keyword when possible, benefit-focused, include unique value, social proof if applicable
+Headline Examples: [Primary benefit] | [Secondary benefit] | [Offer/CTA]
+
+2. Description Strategy: Expand on headlines, address objections, include specific benefits, social proof, urgency/scarcity
+
+3. CTA Strategy: Clear action words (Get, Buy, Download, Call, Learn, Start, Try), specific offer, urgency elements
+
+4. Ad Copy Framework:
+   Headline 1: Feature + benefit
+   Headline 2: Differentiator or social proof
+   Headline 3: Offer or CTA
+   Description 1: Detailed benefit + pain point solution
+   Description 2: Specific offer + CTA + urgency
+
+Ad Copy Variations:
+Create 5-10 ad copy variations including:
+- Different benefit angles
+- Different pain point solutions
+- Different offers/CTAs
+- Social proof variations
+- Urgency variations
+
+Testing Strategy: A/B test headlines, test different CTAs, test different offers, rotate variations, analyze performance
+
+Output: 10 complete ad copy variations, CTA variations (20+), headline formula examples, description formula examples, performance prediction, testing roadmap`, source: "Google Ads Copywriting", claudeOptimized: true, coworkReady: true},
+  {id: 188, title: "Google Ads Keyword Strategy", avatar: "marketer", expert: "@johnharris", effectiveness: 9, description: "Build keyword lists with match types, negatives, and bid strategies", tags: ["google-ads", "keywords", "match-types", "bidding"], useCase: "Build comprehensive keyword strategy for Google Ads", promptText: `Build comprehensive Google Ads keyword strategy.
+
+Business Context:
+Keyword Theme: [MAIN TOPIC OR PRODUCT KEYWORD]
+Target Audience: [WHO IS SEARCHING FOR THIS?]
+Monthly Search Volume Goal: [COVERAGE TARGET]
+Competition Level: [HOW COMPETITIVE IS THIS SPACE?]
+
+Keyword Strategy:
+1. Seed Keywords: 10-20 core keywords related to your business, product, services
+2. Keyword Expansion: Use Google Keyword Planner, SEMrush, Ahrefs to expand list
+3. Match Type Strategy:
+   - Exact Match: Highest intent, highest cost, use for core keywords
+   - Phrase Match: Medium intent, good balance, use for primary keywords
+   - Broad Match: Lowest intent, cheapest, use for discovery
+   - Broad Match Modifier: Control over keywords while keeping flexibility
+
+4. Keyword Organization by Ad Group: Group related keywords by theme, create separate ad groups for different match types, organize by intent level
+
+5. Long-Tail Keywords: 3+ word keywords, lower volume but high intent, lower cost, higher conversion rate
+
+6. Negative Keywords: Competitor brand terms, low-intent keywords, cost-draining keywords, product-specific negatives (if applicable)
+
+7. Bid Strategy by Keyword: High-intent keywords get higher bids, branded keywords lower bids, long-tail keywords competitive bids
+
+8. Seasonal Keywords: Add seasonal variations, seasonal bid adjustments, promotional keywords
+
+9. Performance Metrics: Click volume, cost-per-click, conversion rate, quality score by keyword
+
+Keyword Research Template:
+Primary Keywords | Match Type | Monthly Volume | Competition | Quality Score Target | Bid Strategy
+
+Output: Master keyword list (100-500 keywords), negative keyword list, keyword organization by ad group, match type strategy document, seasonal keyword calendar, bid strategy spreadsheet, quality score target setting`, source: "Google Ads Keyword Mastery", claudeOptimized: true, coworkReady: true},
+
+  // Marketing Sub-categories - Meta Ads (189-191)
+  {id: 189, title: "Meta Ads Creative Brief Generator", avatar: "marketer", expert: "@garyvee", effectiveness: 9, description: "Create ad creative briefs for Facebook and Instagram campaigns", tags: ["meta-ads", "creative", "facebook-ads", "instagram-ads"], useCase: "Design winning creative for Meta platform campaigns", promptText: `Generate comprehensive Meta Ads creative brief.
+
+Campaign Context:
+Product/Service: [WHAT ARE YOU SELLING?]
+Target Audience: [DESCRIBE YOUR IDEAL CUSTOMER]
+Campaign Goal: [AWARENESS/CONSIDERATION/CONVERSION]
+Budget: [TOTAL CREATIVE BUDGET]
+Platform: [FACEBOOK/INSTAGRAM/BOTH]
+
+Creative Brief Elements:
+1. Objective and Goals: Campaign KPIs, creative KPIs (CTR, CPM, ROAS targets), audience targeting details
+
+2. Brand Guidelines: Logo usage, color palette, fonts, brand voice, messaging pillars
+
+3. Offer/Promotion: What are you promoting?, why is it valuable?, unique selling points, urgency/scarcity elements
+
+4. Creative Assets Needed:
+   - Static images: 5-10 variations (different angles, benefits, audiences)
+   - Video ads: Hook strategy, video length, key scenes, captions/subtitles
+   - Carousel ads: Number of cards, story flow, CTA per card
+   - Collection ads: Product showcase, video + images
+
+5. Audience Variations: Create different creatives for different audience segments (interests, behaviors, demographics)
+
+6. Creative Direction: Visual style (lifestyle, product shot, user-generated, animation), tone, messaging angle
+
+7. Copy Strategy: Hook (first 1-3 words critical), body copy, CTA, hashtags, emoji usage
+
+8. Testing Plan: Which creative elements to test, control vs. variable, success metrics
+
+9. Design Specifications: Image dimensions (1200x628), video dimensions, aspect ratio options, text overlay guidelines
+
+Creative Variations:
+- Benefit angle #1 creative
+- Benefit angle #2 creative
+- Social proof creative
+- Urgency/scarcity creative
+- Different audience creative
+
+Output: Complete creative brief, design specifications, copy variations, brand guidelines checklist, creative asset checklist, testing framework, performance prediction`, source: "Meta Ads Creative Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 190, title: "Meta Ads Audience Strategy", avatar: "marketer", expert: "@neilpatel", effectiveness: 9, description: "Design audience targeting, lookalikes, and retargeting funnels for Meta platforms", tags: ["meta-ads", "audience", "targeting", "retargeting"], useCase: "Build sophisticated audience targeting for Meta campaigns", promptText: `Design Meta Ads audience strategy and segmentation.
+
+Business Context:
+Product/Service: [WHAT ARE YOU SELLING?]
+Customer Ideal Profile: [DESCRIBE YOUR BEST CUSTOMER]
+Data Available: [CUSTOMER LIST SIZE, PIXEL DATA, ENGAGEMENT DATA]
+Budget: [CAMPAIGN BUDGET]
+
+Audience Strategy:
+1. First-Party Audiences: Customer list upload (convert to matched audiences), website visitors (pixel), app users, engagement audiences (video viewers, page engagers)
+
+2. Lookalike Audiences: Create lookalikes from best customers, conversion events, website events, create 1%, 5%, 10% lookalike options
+
+3. Interest-Based Targeting: Primary interests, secondary interests, behaviors, demographics (age, location, language)
+
+4. Retargeting Funnel:
+   - Website visitors: Anyone who visited (broad), viewed specific page, spent time on site
+   - Engaged audiences: Video viewers (3 sec, 10 sec, 25%, 50%), post engagers, page visitors
+   - Consideration stage: Add to cart without purchase, content viewers, lead form engagers
+   - Conversion stage: Past purchasers (for upsell), high-value segments
+
+5. Audience Layering: Combine interests with behaviors, narrow by location, exclude competitors' audiences
+
+6. Dynamic Audiences: Use Dynamic Ads for retargeting product viewers
+
+7. Audience Exclusions: Exclude past customers (if acquisition focus), exclude audiences not likely to convert, exclude competitor customers
+
+8. Testing Strategy: Control audience (broad), test specific audiences, test lookalike percentages, test demographic variations
+
+9. Audience Refresh: Regular updates to audience data, seasonal adjustments, performance-based optimizations
+
+Audience Segments:
+Cold: Interest-based + lookalike, Warm: Website visitors + pixel data, Hot: Past engagers + retargeting, VIP: High-value customers + lookalike
+
+Output: Audience strategy document, audience segment definitions, lookalike creation guide, retargeting funnel map, exclusion list, Pixel setup guide, audience refresh calendar`, source: "Meta Audience Targeting Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 191, title: "Meta Ads Funnel Copywriting", avatar: "marketer", expert: "@sujanpatel", effectiveness: 9, description: "Write ad copy for each funnel stage from awareness to conversion", tags: ["meta-ads", "copywriting", "funnel", "conversion"], useCase: "Write persuasive ad copy for every funnel stage", promptText: `Write Meta Ads copy across funnel stages.
+
+Funnel Context:
+Product/Service: [WHAT ARE YOU SELLING?]
+Target Audience: [WHO IS YOUR CUSTOMER?]
+Campaign Goal: [WHICH FUNNEL STAGE?]
+Value Prop: [KEY BENEFIT OR OFFER]
+
+Funnel Stage Copywriting:
+
+AWARENESS STAGE (Getting Attention):
+- Goal: Stop scroll, get engagement, build brand awareness
+- Tone: Interesting, curiosity-generating, relatable
+- Copy Strategy: Lead with benefit/curiosity, include compelling stat or question
+- CTA: Learn More, Save This, Share, Comment
+- Example: [Curiosity hook + benefit statement + soft CTA]
+
+CONSIDERATION STAGE (Building Interest):
+- Goal: Educate, build credibility, show value
+- Tone: Educational, helpful, problem-solving
+- Copy Strategy: Address pain points, showcase solutions, include social proof
+- CTA: See How, Learn More, Watch This, Discover
+- Example: [Problem identification + solution presentation + social proof]
+
+DECISION/CONVERSION STAGE (Closing Sale):
+- Goal: Remove objections, create urgency, drive action
+- Tone: Direct, confident, action-oriented
+- Copy Strategy: Special offer, limited availability, guarantee, clear benefits
+- CTA: Get Started, Buy Now, Claim Offer, Sign Up Today
+- Example: [Special offer + urgency + guarantee + clear CTA]
+
+RETARGETING STAGE (Re-engagement):
+- Goal: Remind, overcome objections, drive completion
+- Tone: Friendly, solution-focused, reassuring
+- Copy Strategy: Address specific objections, remind of benefits, sweetened offer
+- CTA: Finish Now, Get Your [Product], Claim Today
+- Example: [Objection handle + benefit reminder + offer]
+
+Copy Variations:
+Create 5 variations for each funnel stage with different benefit angles, different pain points, different offers, different tones
+
+Output: 20+ complete ad copy variations (5 per stage), CTA variations by stage, pain point-to-benefit mapping, objection handling copy, urgency/scarcity variations, A/B testing plan`, source: "Meta Ads Copywriting Mastery", claudeOptimized: true, coworkReady: true},
+
+  // Marketing Sub-categories - YouTube (192-195)
+  {id: 192, title: "YouTube Video Script Framework", avatar: "marketer", expert: "@garyvee", effectiveness: 9, description: "Write engaging video scripts with hooks, retention techniques, and CTAs", tags: ["youtube", "script", "video", "retention"], useCase: "Write viral-worthy YouTube video scripts", promptText: `Create YouTube video script framework.
+
+Video Context:
+Topic: [WHAT IS YOUR VIDEO ABOUT?]
+Video Length: [8-12/12-20/20+ MINUTES]
+Target Viewer: [WHO SHOULD WATCH?]
+Video Goal: [EDUCATION/ENTERTAINMENT/INSPIRATION/HOW-TO]
+Target Audience Retention: [%90+%]
+
+Script Framework:
+
+HOOK (First 10 seconds - CRITICAL):
+- Goal: Stop the click away, promise value
+- Formula: [Benefit/curiosity statement] + [preview of what they'll learn]
+- Examples: 5 different hooks for your video type
+- A/B test hooks in YouTube Shorts first
+
+BLODY STRUCTURE:
+- Intro (30 sec): Welcome, hook callback, what they'll learn, why they should care
+- Main Content (divided into 3-5 segments): Each segment introduces topic, teaches concept, includes example/story, retention element (visual change, stat, joke)
+- Transitions: Use pattern interrupts (text overlay, music change, cut, B-roll change) every 10-15 seconds
+- Retention Techniques: Ask questions, create curiosity, use stories, include data/stats, pattern interrupts
+
+CLOSING (Last 60 seconds):
+- Recap key points (20 sec)
+- Call-to-action: Subscribe, like, comment, watch next video (20 sec)
+- Suggest next video or playlist (20 sec)
+
+SCRIPT WRITING:
+Scene-by-scene breakdown: What you're saying | Visual elements | Text overlay | Music/sound cues | Retention element
+
+Retention Techniques:
+- Visual pattern interrupts every 10-15 seconds
+- Questions to keep viewer engaged
+- Stories and examples
+- Shocking/surprising stats
+- Humor or personality
+- B-roll and dynamic transitions
+
+Output: Full video script (scene-by-scene), hook variations (10+), retention element list, visual direction notes, text overlay script, CTA options, retention target tracking`, source: "YouTube Scripting Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 193, title: "YouTube SEO & Title Optimization", avatar: "marketer", expert: "@neilpatel", effectiveness: 9, description: "Optimize titles, descriptions, tags, and thumbnails for maximum discoverability", tags: ["youtube", "seo", "titles", "thumbnails"], useCase: "Optimize YouTube videos for discoverability and clicks", promptText: `Design YouTube SEO and optimization strategy.
+
+Channel Context:
+Channel Topic: [YOUR CHANNEL NICHE]
+Target Keywords: [MAIN SEARCH TERMS YOUR AUDIENCE USES]
+Average CTR Goal: [TYPICAL YOUTUBE CTR: 2-5%]
+Average View Duration: [TARGET: 50%+]
+
+YouTube SEO ELEMENTS:
+
+1. TITLE OPTIMIZATION (60 characters max):
+   - Include primary keyword in first half
+   - Create curiosity or benefit statement
+   - Title formula: [Keyword] + [Benefit/Hook] or [Curiosity]
+   - Examples: 5 title variations for your content
+
+2. DESCRIPTION OPTIMIZATION (First 2-3 lines critical):
+   - First line: Compelling summary of video
+   - First 3 lines shown before "more" in search results
+   - Include primary and secondary keywords naturally
+   - Include timestamps for longer videos
+   - Include links to website, relevant videos, playlist
+   - Call-to-action (subscribe, comment, like)
+
+3. TAGS:
+   - 5-8 relevant tags (not stuffing)
+   - Primary keyword as first tag
+   - Long-tail keyword variations
+   - Related topic tags
+
+4. THUMBNAIL STRATEGY:
+   - High contrast colors
+   - Large, clear text (if using text)
+   - Emotional expression (excitement, surprise, curiosity)
+   - Consistency with channel branding
+   - Avoid clickbait, but stand out
+   - A/B test thumbnails
+
+5. PLAYLIST STRATEGY:
+   - Organize videos by topic
+   - Create playlists that boost watch time
+   - Optimize playlist descriptions and titles
+
+6. SEARCH KEYWORD RESEARCH:
+   - Use YouTube search bar autocomplete
+   - VidIQ, TubeBuddy for keyword research
+   - Check competitor videos
+   - Target long-tail keywords
+
+OPTIMIZATION CHECKLIST:
+- Title includes primary keyword
+- Description includes keywords naturally
+- First line of description compelling
+- Thumbnail high quality and clickable
+- Tags relevant and specific
+- Playlist organization
+- Timestamps included
+- Links to relevant videos
+
+Output: Title variations (10+), description template, tag list, thumbnail design brief, keyword research spreadsheet, playlist strategy, optimization checklist`, source: "YouTube SEO Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 194, title: "YouTube Shorts Strategy", avatar: "marketer", expert: "@thisisbrandon", effectiveness: 9, description: "Plan and script YouTube Shorts content for rapid channel growth", tags: ["youtube-shorts", "short-form", "growth", "content"], useCase: "Build YouTube Shorts strategy for channel growth", promptText: `Plan YouTube Shorts strategy for channel growth.
+
+Channel Context:
+Main Channel Topic: [YOUR CHANNEL NICHE]
+Main Video Type: [EDUCATION/ENTERTAINMENT/HOW-TO/VLOG]
+Goal: [GROW SUBSCRIBERS/DRIVE TRAFFIC TO LONG-FORM VIDEOS/BRAND AWARENESS]
+Shorts Capacity: [HOW MANY SHORTS PER WEEK?]
+
+Shorts Strategy:
+
+1. REPURPOSING STRATEGY:
+   - Extract clips from existing long-form videos
+   - Best moments: Shocking reveals, key insights, emotional beats
+   - Highlight reel: Best 15 seconds of each video
+   - Trending audio from existing videos
+
+2. ORIGINAL SHORTS CONTENT:
+   - Hook-heavy content (first 1 second critical)
+   - Quick tips or facts (3-10 second delivery)
+   - Behind-the-scenes (channel personality)
+   - Trending challenges or sounds
+   - Educational snippets
+   - Funny or relatable moments
+
+3. HOOK FORMULA FOR SHORTS:
+   - Visual hook: Text overlay, surprising visual, interesting scene
+   - Audio hook: Trending sound, question, bold statement
+   - Attention hook: First 1 second must stop the scroll
+
+4. SHORTS STRUCTURE:
+   - Hook (0-1 sec): Stop the scroll
+   - Content (1-10 sec): Deliver value or entertainment
+   - CTA (10-15 sec): Subscribe, check out long video, follow
+
+5. TRENDING SOUNDS STRATEGY:
+   - Monitor trending sounds in Shorts
+   - Match your content to trending audio
+   - Create variations on trending sounds
+   - Use copyright-free music from library
+
+6. CONSISTENT POSTING:
+   - Post 3-5 Shorts per week minimum
+   - Test posting times
+   - Create content batches
+   - Use scheduling tools
+
+7. CALL-TO-ACTION STRATEGY:
+   - Subscribe CTA to grow channel
+   - Link to main videos to drive traffic
+   - Channel membership promotion
+   - Video comment CTAs
+
+8. PERFORMANCE TRACKING:
+   - Track Shorts views vs. long-form
+   - Monitor click-through to main videos
+   - Track subscriber growth from Shorts
+   - Analyze which Shorts drive subscriptions
+
+9. SHORTS UPLOAD GUIDE:
+   - Aspect ratio: 9:16 (vertical)
+   - Max length: 60 seconds
+   - File format: MP4, MOV, WebM
+   - Upload directly to Shorts tab
+   - No clickable links in Shorts
+
+Output: Shorts content calendar (30 days), repurposing plan from long-form videos, trending sound strategy, hook library (50+), CTA variations, performance tracking template, tools and resources list`, source: "YouTube Shorts Growth Mastery", claudeOptimized: true, coworkReady: true},
+  {id: 195, title: "YouTube Content Calendar", avatar: "marketer", expert: "@addyosmani", effectiveness: 8, description: "Plan a sustainable YouTube publishing schedule across formats", tags: ["youtube", "content-calendar", "planning", "consistency"], useCase: "Build a sustainable YouTube content publishing plan", promptText: `Design sustainable YouTube content calendar.
+
+Channel Context:
+Channel Topic: [YOUR CHANNEL NICHE]
+Current Video Output: [HOW MANY VIDEOS PER WEEK?]
+Goal: [GROW SUBSCRIBERS/MONETIZE/BUILD AUTHORITY]
+Production Capacity: [TIME AVAILABLE FOR CONTENT CREATION]
+
+Content Calendar Planning:
+
+1. CONTENT MIX STRATEGY:
+   - Pillar content (main topics): 50% of content
+   - Long-form evergreen: 30% of content
+   - Trending/timely content: 20% of content
+   - Mix of formats: Long-form, Shorts, Podcasts, Community posts
+
+2. PUBLISHING SCHEDULE:
+   - Optimal posting day/time for your audience (test and refine)
+   - Consistent schedule (e.g., Tuesday + Friday)
+   - Buffer content (film 4-6 weeks ahead)
+   - Seasonal content planning
+
+3. CONTENT PILLARS (3-5 main themes):
+   - Pillar 1: [Topic and content types]
+   - Pillar 2: [Topic and content types]
+   - Pillar 3: [Topic and content types]
+   - Rotate pillars in publishing schedule
+
+4. MONTHLY CALENDAR:
+   - Video topics
+   - Publishing dates
+   - Shorts opportunities (extract from each video)
+   - Guest collaborations
+   - Seasonal/promotional videos
+   - Milestone celebrations (100k subscribers, anniversaries)
+
+5. QUARTERLY PLANNING:
+   - 3-month content themes
+   - Seasonal content opportunities
+   - Collaboration partners
+   - Product/service launches (if applicable)
+   - Analytics review and optimization
+
+6. CONTENT PRODUCTION WORKFLOW:
+   - Brainstorming session (monthly)
+   - Script writing
+   - Production schedule
+   - Editing and optimization
+   - Thumbnail creation
+   - Description and SEO
+   - Scheduling and publishing
+
+7. METRICS TO TRACK:
+   - Views and watch time
+   - Click-through rate (CTR) by thumbnail
+   - Audience retention
+   - Subscriber growth
+   - Traffic to website/other channels
+   - Revenue (if monetized)
+
+8. OPTIMIZATION PROCESS:
+   - Weekly review of performance
+   - Monthly deep dive analysis
+   - Quarterly strategy adjustment
+   - A/B testing of titles, thumbnails, posting times
+
+9. BATCHING STRATEGY:
+   - Film 4-6 videos at once (batching)
+   - Edit in batches
+   - Schedule uploads weekly
+   - Reduce burnout, maintain consistency
+
+OUTPUT TEMPLATE:
+
+90-Day Content Calendar with:
+- Video topic and title (placeholder)
+- Publish date and time
+- Content pillar
+- Estimated length
+- Shorts clip opportunity
+- Key metrics targets
+- Thumbnail notes
+- SEO keywords
+- Collaboration or special element
+
+Output: 90-day content calendar, content pillar breakdown, publishing schedule framework, production checklist, batching schedule, metrics tracking template, quarterly planning template`, source: "YouTube Content Planning Mastery", claudeOptimized: true, coworkReady: true},
+,
+,
+
+];
 
 const categoryNames = {
             innovator: "Innovator",
@@ -9537,12 +10652,14 @@ const categoryNames = {
             designer: "Designer",
             freelancer: "Freelancer",
             legal: "Legal",
-            hr: "HR/People"
+            hr: "HR/People",
+            partners: "Partner Collaboration",
+            virtualevents: "Virtual Events"
         };
 
         const experts = [...new Set(allPrompts.map(p => p.expert))].map(name => {
             const prompts = allPrompts.filter(p => p.expert === name);
-            const avatarMap = {innovator:'🚀',ceo:'👔',marketer:'📣',podcaster:'🎙️',influencer:'📱',wellness:'🧘',investor:'💰',developer:'💻',educator:'📚',writer:'✍️',dataanalyst:'📊',designer:'🎨',freelancer:'🔧',legal:'⚖️',hr:'👥'};
+            const avatarMap = {innovator:'🚀',ceo:'👔',marketer:'📣',podcaster:'🎙️',influencer:'📱',wellness:'🧘',investor:'💰',developer:'💻',educator:'📚',writer:'✍️',dataanalyst:'📊',designer:'🎨',freelancer:'🔧',legal:'⚖️',hr:'👥',partners:'🤝',virtualevents:'🎪'};
             return {
                 name: name,
                 avatar: avatarMap[prompts[0].avatar] || '🤖',
