@@ -9753,7 +9753,7 @@ const categoryNames = {
             const topExperts = Object.entries(expertCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
             new Chart(ctx3, {
-                type: 'barH',
+                type: 'bar',
                 data: {
                     labels: topExperts.map(e => e[0]),
                     datasets: [{
