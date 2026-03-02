@@ -9540,6 +9540,26 @@ const categoryNames = {
             hr: "HR/People"
         };
 
+        const experts = [...new Set(allPrompts.map(p => p.expert))].map(name => {
+            const prompts = allPrompts.filter(p => p.expert === name);
+            const avatarMap = {innovator:'🚀',ceo:'👔',marketer:'📣',podcaster:'🎙️',influencer:'📱',wellness:'🧘',investor:'💰',developer:'💻',educator:'📚',writer:'✍️',dataanalyst:'📊',designer:'🎨',freelancer:'🔧',legal:'⚖️',hr:'👥'};
+            return {
+                name: name,
+                avatar: avatarMap[prompts[0].avatar] || '🤖',
+                handle: '@' + name.toLowerCase().replace(/\s+/g, ''),
+                specialty: categoryNames[prompts[0].avatar] || 'Expert'
+            };
+        });
+
+        const frameworks = [
+            {title: 'Chain of Thought', description: 'Break complex reasoning into sequential steps for better accuracy', steps: ['Define the problem clearly', 'Break into sub-problems', 'Solve each step explicitly', 'Synthesize final answer']},
+            {title: 'Few-Shot Learning', description: 'Provide examples to guide AI output format and quality', steps: ['Show 2-3 ideal examples', 'Highlight patterns to follow', 'Present the actual task', 'Request matching format']},
+            {title: 'Role-Based Prompting', description: 'Assign expert personas for domain-specific responses', steps: ['Define the expert role', 'Set context and constraints', 'Describe the task', 'Specify output format']},
+            {title: 'Iterative Refinement', description: 'Progressively improve outputs through structured feedback loops', steps: ['Generate initial output', 'Identify gaps or issues', 'Provide specific feedback', 'Request targeted improvements']},
+            {title: 'XML-Structured Prompting', description: 'Use XML tags for Claude-optimized structured communication', steps: ['Wrap instructions in semantic tags', 'Separate context from task', 'Use tags for examples', 'Structure output format']},
+            {title: 'Constraint-Based Design', description: 'Define boundaries to focus and improve AI output quality', steps: ['Set word/length limits', 'Define tone and audience', 'Specify what to include/exclude', 'Add format requirements']}
+        ];
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
             renderTabs();
