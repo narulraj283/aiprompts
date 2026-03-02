@@ -10657,14 +10657,14 @@ const categoryNames = {
             virtualevents: "Virtual Events"
         };
 
-        const experts = [...new Set(allPrompts.map(p => p.expert))].map(name => {
+        const experts = [...new Set(allPrompts.map(p => p.expert).filter(Boolean))].map(name => {
             const prompts = allPrompts.filter(p => p.expert === name);
             const avatarMap = {innovator:'🚀',ceo:'👔',marketer:'📣',podcaster:'🎙️',influencer:'📱',wellness:'🧘',investor:'💰',developer:'💻',educator:'📚',writer:'✍️',dataanalyst:'📊',designer:'🎨',freelancer:'🔧',legal:'⚖️',hr:'👥',partners:'🤝',virtualevents:'🎪'};
             const firstPrompt = prompts[0] || {avatar: 'innovator'};
             return {
                 name: name,
                 avatar: avatarMap[firstPrompt.avatar] || '🤖',
-                handle: '@' + name.toLowerCase().replace(/\s+/g, ''),
+                handle: '@' + (name || '').toLowerCase().replace(/\s+/g, ''),
                 specialty: categoryNames[firstPrompt.avatar] || 'Expert'
             };
         });
